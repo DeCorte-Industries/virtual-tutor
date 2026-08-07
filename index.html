@@ -229,6 +229,43 @@
     border:1px solid var(--line);font-size:0.85rem;color:var(--chalk-white-dim);
   }
 
+  /* ---------- Beyond the classroom (image aside) ---------- */
+  .aside-gallery{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:56px;}
+  .aside-card{
+    background:var(--chalk-bg-2);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;transition:transform .18s ease, border-color .18s ease;
+  }
+  .aside-card:hover{transform:translateY(-4px);border-color:rgba(245,241,232,0.3);}
+  .aside-card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--chalk-bg);}
+  .aside-card .cap{padding:16px 18px;font-size:0.9rem;color:var(--chalk-white-dim);margin:0;}
+  .aside-card .cap strong{color:var(--chalk-white);}
+
+  /* ---------- Charities ---------- */
+  .charities{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .charity-card{
+    background:var(--chalk-bg-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px 22px 22px;display:flex;flex-direction:column;gap:14px;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .charity-card:hover{transform:translateY(-4px);border-color:rgba(245,241,232,0.3);}
+  .charity-logo{
+    height:76px;display:flex;align-items:center;justify-content:center;
+    background:#fff;border-radius:10px;padding:10px 16px;
+  }
+  .charity-logo img{max-height:100%;max-width:100%;width:auto;object-fit:contain;}
+  .charity-logo-text{background:rgba(245,241,232,0.06);}
+  .charity-logo-text span{
+    font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;
+    color:var(--chalk-white-dim);text-align:center;line-height:1.2;
+  }
+  .charity-card h3{font-size:1.1rem;}
+  .charity-card p{color:var(--chalk-white-dim);font-size:0.92rem;margin:0;flex:1;}
+  .charity-card a{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:0.88rem;font-weight:600;color:var(--gold);text-decoration:none;
+  }
+  .charity-card a:hover{text-decoration:underline;}
+
   /* ---------- Testimonials ---------- */
   .testimonials{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
   .quote-card{
@@ -319,6 +356,7 @@
       <a href="#how">How it works</a>
       <a href="#rates">Rates</a>
       <a href="#about">About</a>
+      <a href="#charities">Charities</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
     </div>
@@ -488,6 +526,58 @@
           <span class="fact">Text to book a session</span>
         </div>
       </div>
+    </div>
+    <div class="wrap">
+      <p class="mono" style="color:var(--gold);">Beyond the classroom</p>
+      <div class="aside-gallery">
+        <div class="aside-card reveal">
+          <img src="images/orca.jpg" alt="Two orcas breaching the ocean surface" loading="lazy" />
+          <p class="cap"><strong>Favorite animal:</strong> the orca.</p>
+        </div>
+        <div class="aside-card reveal">
+          <img src="images/sextant.jpg" alt="An antique brass sextant used for celestial navigation" loading="lazy" />
+          <p class="cap">A reminder that math has always charted the way — from celestial navigation to Calculus AB.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="charities">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">Giving back</span>
+        <h2>Charities Henry supports.</h2>
+        <p>A few organizations Henry believes in — not affiliated with or endorsed by them, just causes he chooses to support personally.</p>
+      </div>
+      <div class="charities">
+        <div class="charity-card reveal">
+          <div class="charity-logo">
+            <img src="images/wounded-warrior-project.png" alt="Wounded Warrior Project logo" loading="lazy" />
+          </div>
+          <h3>Wounded Warrior Project</h3>
+          <p>Supports post-9/11 wounded, ill, and injured veterans, service members, and their families.</p>
+          <a href="https://www.woundedwarriorproject.org" target="_blank" rel="noopener noreferrer">Visit site <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="charity-card reveal">
+          <div class="charity-logo charity-logo-text">
+            <span>Humane World<br />for Animals</span>
+          </div>
+          <h3>Humane World for Animals</h3>
+          <p>Works to end animal cruelty and suffering through advocacy, rescue, and policy change.</p>
+          <a href="https://www.humaneworld.org/en" target="_blank" rel="noopener noreferrer">Visit site <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="charity-card reveal">
+          <div class="charity-logo charity-logo-text">
+            <span>St. Jude Children's<br />Research Hospital</span>
+          </div>
+          <h3>St. Jude Children's Research Hospital</h3>
+          <p>Leads research and treatment for childhood cancer — families never receive a bill.</p>
+          <a href="https://www.stjude.org" target="_blank" rel="noopener noreferrer">Visit site <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <p class="sample-note"><strong>Note:</strong> Humane World for Animals and St. Jude show text placeholders instead of real logos — see <code>open-items.md</code> for how to add official logo files.</p>
     </div>
   </section>
 
