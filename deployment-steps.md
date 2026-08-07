@@ -7,9 +7,20 @@ This assumes nothing exists yet — no domain, no hosting account, no live site.
 1. Open `index.html` and replace every placeholder:
    - The "Photo of Henry" box in the About section → a real headshot.
    - Sample testimonials → real parent/student quotes (or remove the section until you have some).
-   - The Calendly link (`href="#"` in the Contact section) → your real booking link (Phase 3).
+   - The Cal.com link (`href="#"` in the Contact section) → your real booking link (Phase 3).
    - The Venmo/Zelle note → your actual handle.
 2. Proofread copy and confirm the phone number and course list are correct.
+
+## Development previews (Vercel) — optional, do this before or during Phase 2
+
+While you're still editing content, it's useful to have a shareable preview link without touching a real domain or production host. Vercel is well-suited for this and is free for this use case.
+
+- **D1.** Put the site in a GitHub repository (private is fine — see the license note in `README.md`): create a free GitHub account, make a new repo (e.g. `virtual-tutor`), and push `index.html` to it. (This is the same repo you'll reuse for production hosting in Phase 4 — no need to do it twice.)
+- **D2.** Create a free account at **[vercel.com](https://vercel.com)**, signing in with GitHub.
+- **D3.** Click **"Add New… → Project"**, import the repo, and deploy. No build command or output directory is needed — it's a plain static HTML site, so Vercel's defaults work as-is.
+- **D4.** Vercel deploys immediately to a temporary URL like `virtual-tutor.vercel.app`. Send this to Henry to review before anything is public on the real domain.
+- **D5.** Every push to the repo creates a fresh preview deployment with its own URL, so you can compare versions without overwriting anything — handy while working through the items in `open-items.md`.
+- **D6.** This is a development step, not a production choice: once the site is ready to launch, continue with Phase 4 below (Netlify) for the live domain. If you'd rather use Vercel for production too, that's equally valid — Phase 4 and 5's "connect a custom domain" steps work almost identically on Vercel, just substitute Vercel's dashboard for Netlify's.
 
 ## Phase 2 — Register a domain
 
@@ -19,7 +30,7 @@ This assumes nothing exists yet — no domain, no hosting account, no live site.
 
 ## Phase 3 — Wire up booking, contact, and payment
 
-6. **Scheduling:** Create a free [Calendly](https://calendly.com) account. Set up two event types — "Free intro call" (15 min) and "Tutoring session" (e.g. 60 min) — and copy the booking link into the site's Contact section.
+6. **Scheduling:** Create a free [Cal.com](https://cal.com) account. Set up event types matching the site's rates — "10-minute intro call," "1-hour session," "2-hour session," and "Group session" — and copy the booking link into the site's Contact section. (Cal.com is open-source and generally has a more generous free tier than Calendly, which is why it replaced Calendly in this plan.)
 7. **Contact form:** The form in `index.html` has no backend yet. Pick one:
    - **Netlify Forms** (easiest if hosting on Netlify — see Phase 4): add `name="contact"` and a `data-netlify="true"` attribute to the `<form>` tag. No extra signup needed.
    - **Formspree**: sign up free, get a form endpoint URL, set it as the form's `action`.
@@ -44,7 +55,7 @@ This assumes nothing exists yet — no domain, no hosting account, no live site.
 
 ## Phase 6 — Test and launch
 
-16. On a phone and a laptop, check: every nav link scrolls correctly, the "Call" and "Text" buttons open the right app, the Calendly link opens the real booking page, and the contact form actually delivers a test message.
+16. On a phone and a laptop, check: every nav link scrolls correctly, the "Text" and voicemail buttons open the right app, the Cal.com link opens the real booking page, and the contact form actually delivers a test message.
 17. Run the live URL through Google's PageSpeed Insights or Lighthouse (built into Chrome DevTools) as a quick sanity check.
 18. Once satisfied, share the domain: update the business card, any social profiles, and email signature with the new URL.
 
