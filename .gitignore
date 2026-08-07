@@ -1,0 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Dependencies / build output (if tooling gets added later)
+node_modules/
+dist/
+.netlify/
+
+# Environment & secrets
+.env
+.env.local
+
+# Internal planning & personal documents — not for the repo
+# (contains Henry's personal contact info, unpublished pricing details,
+# and the raw draft of his bio — keep these local only)
+*.pdf
+IMG_9711.jpeg
+questions-for-henry.md
+site-change-plan.md
+open-items.md

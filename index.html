@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Henry Oglesby — Virtual Private Math Tutor</title>
+<meta name="description" content="One-on-one virtual math tutoring from Algebra 1 through Calculus AB with Henry Oglesby." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --chalk-bg:#16302B;
+    --chalk-bg-2:#1D3D36;
+    --chalk-white:#F5F1E8;
+    --chalk-white-dim:#C9D3CC;
+    --coral:#E8543E;
+    --gold:#E8A93B;
+    --teal:#3FBFB5;
+    --periwinkle:#7B8CE0;
+    --plum:#C6538C;
+    --line: rgba(245,241,232,0.14);
+    --radius: 14px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--chalk-bg);
+    color:var(--chalk-white);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.08;
+    margin:0;
+    color:var(--chalk-white);
+  }
+  .mono{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-size:0.78rem;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  :focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Spine ladder (signature element) ---------- */
+  .spine-strip{
+    display:flex;
+    height:8px;
+    width:100%;
+  }
+  .spine-strip span{flex:1;}
+  .spine-strip .c1{background:var(--coral);}
+  .spine-strip .c2{background:var(--gold);}
+  .spine-strip .c3{background:var(--teal);}
+  .spine-strip .c4{background:var(--periwinkle);}
+  .spine-strip .c5{background:var(--plum);}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(22,48,43,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;
+    max-width:1120px;margin:0 auto;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;
+  }
+  .brand .marks{display:flex;gap:2px;}
+  .brand .marks span{width:4px;height:18px;border-radius:2px;}
+  .nav-links{display:flex;gap:28px;align-items:center;}
+  .nav-links a{
+    font-size:0.92rem;text-decoration:none;color:var(--chalk-white-dim);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--chalk-white);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;
+    border-radius:999px;
+    font-weight:600;font-size:0.95rem;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--coral);color:#fff;}
+  .btn-primary:hover{box-shadow:0 10px 24px rgba(232,84,62,0.35);}
+  .btn-ghost{border-color:var(--line);color:var(--chalk-white);}
+  .btn-ghost:hover{border-color:var(--chalk-white-dim);}
+  .nav-cta{display:none;}
+  @media(min-width:860px){.nav-cta{display:inline-flex;}}
+  .menu-toggle{display:inline-flex;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--chalk-white);}
+  @media(min-width:860px){.menu-toggle{display:none;} .nav-links{display:flex;}}
+  @media(max-width:859px){
+    .nav-links{
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--chalk-bg-2);
+      flex-direction:column;align-items:flex-start;
+      padding:20px 28px;gap:18px;
+      border-bottom:1px solid var(--line);
+      display:none;
+    }
+    .nav-links.open{display:flex;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 80px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(600px 300px at 85% -10%, rgba(232,169,59,0.16), transparent 60%),
+      radial-gradient(500px 260px at -5% 110%, rgba(63,191,181,0.14), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;display:grid;gap:28px;max-width:760px;}
+  .eyebrow{color:var(--gold);display:flex;align-items:center;gap:10px;}
+  .eyebrow .dash{width:28px;height:1px;background:var(--gold);}
+  .hero h1{font-size:clamp(2.4rem, 5vw, 4rem);}
+  .hero h1 em{
+    font-style:italic;color:var(--teal);
+  }
+  .hero p.lede{
+    font-size:1.15rem;color:var(--chalk-white-dim);max-width:560px;
+  }
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px;}
+  .ladder-row{
+    margin-top:20px;
+    display:flex;flex-wrap:wrap;gap:10px;
+  }
+  .ladder-chip{
+    display:flex;align-items:center;gap:8px;
+    padding:8px 14px;border-radius:999px;
+    background:rgba(245,241,232,0.06);
+    border:1px solid var(--line);
+    font-size:0.85rem;color:var(--chalk-white-dim);
+  }
+  .ladder-chip .dot{width:9px;height:9px;border-radius:50%;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px;margin:0 0 48px;}
+  .section-head .mono{color:var(--teal);display:block;margin-bottom:14px;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:16px;}
+  .section-head p{color:var(--chalk-white-dim);font-size:1.05rem;}
+  .divider{border:none;border-top:1px solid var(--line);}
+
+  /* ---------- Subjects (ladder cards) ---------- */
+  .ladder{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  .course-card{
+    background:var(--chalk-bg-2);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 22px 24px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .course-card:hover{transform:translateY(-4px);border-color:rgba(245,241,232,0.3);}
+  .course-card .bar{position:absolute;top:0;left:0;right:0;height:6px;}
+  .course-card .step{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--chalk-white-dim);margin-bottom:14px;display:block;}
+  .course-card h3{font-size:1.25rem;margin-bottom:8px;}
+  .course-card p{color:var(--chalk-white-dim);font-size:0.94rem;margin:0;}
+
+  /* ---------- How it works ---------- */
+  .steps{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .step-card{padding-left:0;}
+  .step-num{
+    font-family:'Fraunces',serif;font-size:2.2rem;color:var(--coral);
+    margin-bottom:10px;display:block;
+  }
+  .step-card h3{font-size:1.15rem;margin-bottom:8px;}
+  .step-card p{color:var(--chalk-white-dim);font-size:0.96rem;margin:0;}
+
+  /* ---------- About ---------- */
+  .about{
+    display:grid;gap:48px;
+    grid-template-columns:1fr;
+    align-items:center;
+  }
+  @media(min-width:800px){.about{grid-template-columns:0.9fr 1.1fr;}}
+  .about-portrait{
+    aspect-ratio:4/5;
+    border-radius:var(--radius);
+    background:
+      linear-gradient(160deg, rgba(232,84,62,0.25), rgba(63,191,181,0.2)),
+      var(--chalk-bg-2);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .about-portrait .initials{
+    font-family:'Fraunces',serif;font-size:5rem;color:var(--chalk-white);opacity:0.85;
+  }
+  .about-portrait .tag{
+    position:absolute;bottom:18px;left:18px;right:18px;
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--chalk-white-dim);
+  }
+  .about-copy p{color:var(--chalk-white-dim);font-size:1.02rem;margin:0 0 16px;}
+  .about-facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;}
+  .fact{
+    padding:9px 14px;border-radius:10px;background:rgba(245,241,232,0.06);
+    border:1px solid var(--line);font-size:0.85rem;color:var(--chalk-white-dim);
+  }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .quote-card{
+    background:var(--chalk-bg-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 24px;
+  }
+  .quote-card p.q{font-size:1.02rem;margin:0 0 18px;color:var(--chalk-white);}
+  .quote-card .who{display:flex;align-items:center;gap:10px;}
+  .quote-card .who .dot{width:10px;height:10px;border-radius:50%;}
+  .quote-card .who span{font-size:0.88rem;color:var(--chalk-white-dim);}
+  .sample-note{margin-top:22px;font-size:0.85rem;color:var(--chalk-white-dim);}
+  .sample-note strong{color:var(--gold);}
+
+  /* ---------- Contact ---------- */
+  .contact-grid{display:grid;gap:40px;grid-template-columns:1fr;}
+  @media(min-width:860px){.contact-grid{grid-template-columns:1fr 1fr;}}
+  .contact-card{
+    background:var(--chalk-bg-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px;
+  }
+  .contact-card h3{font-size:1.2rem;margin-bottom:10px;}
+  .contact-card p{color:var(--chalk-white-dim);margin:0 0 20px;font-size:0.96rem;}
+  .quick-links{display:flex;flex-direction:column;gap:12px;}
+  .quick-links a{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 16px;border-radius:10px;background:rgba(245,241,232,0.05);
+    border:1px solid var(--line);text-decoration:none;font-size:0.95rem;
+    transition:border-color .15s ease;
+  }
+  .quick-links a:hover{border-color:rgba(245,241,232,0.3);}
+  form{display:grid;gap:14px;}
+  label{font-size:0.82rem;color:var(--chalk-white-dim);display:block;margin-bottom:6px;}
+  input,textarea{
+    width:100%;padding:12px 14px;border-radius:10px;
+    background:rgba(245,241,232,0.05);
+    border:1px solid var(--line);
+    color:var(--chalk-white);
+    font-family:'Inter',sans-serif;font-size:0.95rem;
+  }
+  input::placeholder,textarea::placeholder{color:rgba(245,241,232,0.35);}
+  textarea{resize:vertical;min-height:110px;}
+  .form-note{font-size:0.78rem;color:var(--chalk-white-dim);opacity:0.8;}
+  .form-note a{color:var(--gold);}
+
+  /* ---------- Availability list ---------- */
+  .avail-list{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+  .avail-list li{
+    display:flex;justify-content:space-between;gap:12px;
+    padding:12px 16px;border-radius:10px;
+    background:rgba(245,241,232,0.05);
+    border:1px solid var(--line);
+    font-size:0.92rem;color:var(--chalk-white-dim);
+  }
+  .avail-list li .day{color:var(--chalk-white);font-weight:600;}
+
+  footer{
+    padding:40px 0 32px;border-top:1px solid var(--line);
+  }
+  .footer-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;}
+  .footer-row p{margin:0;font-size:0.85rem;color:var(--chalk-white-dim);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
+  }
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="spine-strip"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span><span class="c5"></span></div>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="brand" aria-label="Henry Oglesby, home">
+      <span class="marks" aria-hidden="true">
+        <span style="background:var(--coral)"></span>
+        <span style="background:var(--gold)"></span>
+        <span style="background:var(--teal)"></span>
+        <span style="background:var(--periwinkle)"></span>
+      </span>
+      Henry Oglesby
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#subjects">Subjects</a>
+      <a href="#how">How it works</a>
+      <a href="#rates">Rates</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn btn-primary nav-cta">Book a session</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="mono eyebrow"><span class="dash"></span> Virtual Private Math Tutor</p>
+      <h1>One tutor, one student, every step from <em>Algebra&nbsp;1</em> to <em>Calculus&nbsp;AB</em>.</h1>
+      <p class="lede">Henry Oglesby teaches live math sessions online — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contact">Book a free 10-minute intro call</a>
+        <a class="btn btn-ghost" href="sms:4708412774">Text 470-841-2774</a>
+      </div>
+      <div class="ladder-row" aria-label="Subjects taught, in sequence">
+        <span class="ladder-chip"><span class="dot" style="background:var(--coral)"></span>Algebra 1</span>
+        <span class="ladder-chip"><span class="dot" style="background:var(--gold)"></span>Geometry</span>
+        <span class="ladder-chip"><span class="dot" style="background:var(--teal)"></span>Algebra 2</span>
+        <span class="ladder-chip"><span class="dot" style="background:var(--periwinkle)"></span>Precalculus</span>
+        <span class="ladder-chip"><span class="dot" style="background:var(--plum)"></span>Calculus AB</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="subjects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">The ladder</span>
+        <h2>One path, five courses.</h2>
+        <p>Math builds on itself — so sessions do too. Wherever your student is on this ladder, Henry meets them there and works toward the next rung.</p>
+      </div>
+      <div class="ladder">
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--coral)"></span>
+          <span class="step">Rung 01</span>
+          <h3>Algebra 1</h3>
+          <p>Variables, linear equations, and functions — the foundation everything after this is built on.</p>
+        </div>
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--gold)"></span>
+          <span class="step">Rung 02</span>
+          <h3>Geometry</h3>
+          <p>Proofs, shapes, and spatial reasoning, taught as logic puzzles instead of memorized rules.</p>
+        </div>
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--teal)"></span>
+          <span class="step">Rung 03</span>
+          <h3>Algebra 2</h3>
+          <p>Polynomials, logarithms, and complex numbers — where most students need a steady second voice.</p>
+        </div>
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--periwinkle)"></span>
+          <span class="step">Rung 04</span>
+          <h3>Precalculus</h3>
+          <p>Trigonometry and sequences, with an eye toward the way of thinking calculus will demand.</p>
+        </div>
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--plum)"></span>
+          <span class="step">Rung 05</span>
+          <h3>Calculus AB</h3>
+          <p>Limits, derivatives, and integrals — worked problem by problem, with AP exam pacing in mind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">How sessions work</span>
+        <h2>Three steps to the first lesson.</h2>
+      </div>
+      <div class="steps">
+        <div class="step-card reveal">
+          <span class="step-num">1</span>
+          <h3>Reach out</h3>
+          <p>Text or call with the course, the school, and what's due. Henry replies with a plan and a few open times.</p>
+        </div>
+        <div class="step-card reveal">
+          <span class="step-num">2</span>
+          <h3>Book a time</h3>
+          <p>Pick a slot that fits the week. Every session happens over video, one on one.</p>
+        </div>
+        <div class="step-card reveal">
+          <span class="step-num">3</span>
+          <h3>Work it live</h3>
+          <p>A shared digital whiteboard, worked step by step, until the problem actually makes sense.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="rates">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">Rates &amp; sessions</span>
+        <h2>Straightforward pricing, real availability.</h2>
+        <p>One rate, flexible session lengths, and a short call first if you'd rather talk it through before booking.</p>
+      </div>
+      <div class="ladder">
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--coral)"></span>
+          <span class="step">1:1 sessions</span>
+          <h3>$50 / hour</h3>
+          <p>Choose a 1-hour or 2-hour session. Two-hour sessions run straight through — no breaks.</p>
+        </div>
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--gold)"></span>
+          <span class="step">Group sessions</span>
+          <h3>Up to 4 students</h3>
+          <p>A discounted per-student rate for small groups. Ask Henry for current group pricing.</p>
+        </div>
+        <div class="course-card reveal">
+          <span class="bar" style="background:var(--teal)"></span>
+          <span class="step">First step</span>
+          <h3>10-minute intro call</h3>
+          <p>No charge — a short call to talk through what your student needs before booking a paid session.</p>
+        </div>
+      </div>
+      <div class="contact-grid" style="margin-top:40px;">
+        <div class="contact-card reveal">
+          <h3>Weekly availability</h3>
+          <ul class="avail-list">
+            <li><span class="day">Tue – Thu</span><span>4:00 – 8:00 PM</span></li>
+            <li><span class="day">Wed</span><span>3:30 – 5:30 PM</span></li>
+            <li><span class="day">Fri</span><span>6:00 – 9:00 PM</span></li>
+          </ul>
+          <p class="form-note" style="margin-top:14px;">Weekend hours (Saturday and Sunday) are still being finalized — check with Henry directly for those slots.</p>
+        </div>
+        <div class="contact-card reveal">
+          <h3>Payment &amp; cancellation</h3>
+          <p>Payment is due upfront, by the Sunday before the week of your scheduled session(s), via Zelle or PayPal. <em>(Handles to be added once confirmed.)</em></p>
+          <p style="margin-bottom:0;">Need to reschedule? Give at least 48 hours' notice by text. Without that notice, payment is forfeited and a new session requires new payment. Outside of emergencies, booked sessions aren't cancelled.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="about-portrait reveal">
+        <span class="initials">HO</span>
+        <span class="tag mono">Photo of Henry — add before launch</span>
+      </div>
+      <div class="about-copy reveal">
+        <span class="mono" style="color:var(--teal);display:block;margin-bottom:14px;">About Henry</span>
+        <h2 style="margin-bottom:18px;font-size:clamp(1.6rem,3vw,2.2rem);">Math clicks when someone slows down long enough to explain it right.</h2>
+        <p>Henry has spent over 30 years teaching and tutoring math — in morning school, summer school, evening school, and virtual classrooms. He holds a BS in Mathematics from Barton College, a 7–12 mathematics teaching certification, and a Master's in Mathematics Education from Georgia State University, with additional coursework at Georgia Tech and UGA. Now a retired teacher, he tutors as often as he can.</p>
+        <!-- TODO: swap in Henry's personal "why I tutor" story once he signs off on the draft in site-change-plan.md -->
+        <p>Every session starts with the actual homework or test on the table — not a generic worksheet — and works backward from there on a shared digital whiteboard, until the concept holds on its own.</p>
+        <div class="about-facts">
+          <span class="fact">30+ years teaching &amp; tutoring</span>
+          <span class="fact">Algebra 1 through Calculus AB</span>
+          <span class="fact">Virtual, or in person at the library</span>
+          <span class="fact">Text to book a session</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="testimonials">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">From parents and students</span>
+        <h2>What sessions with Henry feel like.</h2>
+      </div>
+      <div class="testimonials">
+        <div class="quote-card reveal">
+          <p class="q">"My daughter went from dreading Algebra 2 homework to doing it without a fight. Henry explains things at her pace, not his."</p>
+          <div class="who"><span class="dot" style="background:var(--coral)"></span><span>Parent, Algebra 2 student</span></div>
+        </div>
+        <div class="quote-card reveal">
+          <p class="q">"He doesn't just give the answer — he waits for it to click. That's the difference from every other tutor we tried."</p>
+          <div class="who"><span class="dot" style="background:var(--teal)"></span><span>Parent, Precalculus student</span></div>
+        </div>
+        <div class="quote-card reveal">
+          <p class="q">"Calculus AB felt impossible until we started weekly sessions. My AP score said otherwise."</p>
+          <div class="who"><span class="dot" style="background:var(--plum)"></span><span>Student, Calculus AB</span></div>
+        </div>
+      </div>
+      <p class="sample-note"><strong>Note:</strong> these are sample quotes for the design mockup — swap in real testimonials before launch.</p>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">Get started</span>
+        <h2>Book the first session.</h2>
+        <p>Fastest way to start: send a text. Prefer to write it out? Use the form and Henry will follow up within a day.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card reveal">
+          <h3>Reach Henry directly</h3>
+          <p>For the quickest response, send a text — Henry replies by text or voicemail, so calls may not get picked up right away.</p>
+          <div class="quick-links">
+            <a href="sms:4708412774">Text 470-841-2774 <span aria-hidden="true">→</span></a>
+            <a href="tel:4708412774">Leave a voicemail <span aria-hidden="true">→</span></a>
+            <a href="mailto:henry@mathwithhenry.com">Email henry@mathwithhenry.com <span aria-hidden="true">→</span></a>
+            <a href="#" aria-disabled="true">Book on Calendly <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="form-note" style="margin-top:16px;">Payment is due upfront via Zelle or PayPal — see <a href="#rates">rates &amp; policy</a> for full details.</p>
+        </div>
+        <div class="contact-card reveal">
+          <h3>Send a message</h3>
+          <form>
+            <div>
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" placeholder="Jane Smith" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="jane@email.com" />
+            </div>
+            <div>
+              <label for="subject">Course</label>
+              <input id="subject" name="subject" type="text" placeholder="e.g. Algebra 2" />
+            </div>
+            <div>
+              <label for="message">What's going on?</label>
+              <textarea id="message" name="message" placeholder="Tell Henry what your student needs help with"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit" style="justify-self:start;">Send message</button>
+            <p class="form-note">This form is a design placeholder — connect it to Netlify Forms or Formspree before launch.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <p>© 2026 Henry Oglesby · Virtual Private Math Tutor</p>
+    <p>470-841-2774 · text preferred</p>
+  </div>
+</footer>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReduced && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
