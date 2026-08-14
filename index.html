@@ -108,6 +108,8 @@
   .btn-primary:hover{box-shadow:0 10px 24px rgba(232,84,62,0.35);}
   .btn-ghost{border-color:var(--line);color:var(--chalk-white);}
   .btn-ghost:hover{border-color:var(--chalk-white-dim);}
+  .btn-static{cursor:default;}
+  .btn-static:hover{transform:none;border-color:var(--line);}
   .nav-cta{display:none;}
   @media(min-width:860px){.nav-cta{display:inline-flex;}}
   .menu-toggle{display:inline-flex;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--chalk-white);}
@@ -502,6 +504,11 @@
           <h3>Payment &amp; cancellation</h3>
           <p>Payment is due upfront, by the Sunday before the week of your scheduled session(s), via Zelle (470-841-2774) or <a href="https://paypal.me/MrO1976" target="_blank" rel="noopener noreferrer">paypal.me/MrO1976</a>.</p>
           <p style="margin-bottom:0;">Need to reschedule? Give at least 48 hours' notice by text. Without that notice, payment is forfeited and a new session requires new payment. Outside of emergencies, booked sessions aren't cancelled.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;">
+            <span class="btn btn-ghost btn-static" aria-label="Pay with Zelle to 470-841-2774">Zelle · 470-841-2774</span>
+            <a class="btn btn-primary" href="https://paypal.me/MrO1976" target="_blank" rel="noopener noreferrer">Pay via PayPal</a>
+          </div>
+          <p class="form-note" style="margin-top:10px;margin-bottom:0;">The Zelle button is for reference only — Zelle payments are sent directly through your own banking app, not through a link.</p>
         </div>
       </div>
     </div>
