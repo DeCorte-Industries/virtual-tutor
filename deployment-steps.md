@@ -4,11 +4,7 @@ This assumes nothing exists yet — no domain, no hosting account, no live site.
 
 ## Phase 1 — Finalize content
 
-1. Open `index.html` and replace every placeholder:
-   - The "Photo of Henry" box in the About section → a real headshot.
-   - Sample testimonials → real parent/student quotes (or remove the section until you have some).
-   - The Cal.com link (`href="#"` in the Contact section) → your real booking link (Phase 3).
-   - The Venmo/Zelle note → your actual handle.
+1. Open `index.html` and check what's still pending — see `open-items.md` for the current list (currently: real testimonials, Henry's bio sign-off, two charity logos, the Cal.com link, and confirming the PayPal account is Business).
 2. Proofread copy and confirm the phone number and course list are correct.
 
 ## Development previews (Vercel) — optional, do this before or during Phase 2
@@ -31,10 +27,9 @@ While you're still editing content, it's useful to have a shareable preview link
 ## Phase 3 — Wire up booking, contact, and payment
 
 6. **Scheduling:** Create a free [Cal.com](https://cal.com) account. Set up event types matching the site's rates — "10-minute intro call," "1-hour session," "2-hour session," and "Group session" — and copy the booking link into the site's Contact section. (Cal.com is open-source and generally has a more generous free tier than Calendly, which is why it replaced Calendly in this plan.)
-7. **Contact form:** The form in `index.html` has no backend yet. Pick one:
-   - **Netlify Forms** (easiest if hosting on Netlify — see Phase 4): add `name="contact"` and a `data-netlify="true"` attribute to the `<form>` tag. No extra signup needed.
-   - **Formspree**: sign up free, get a form endpoint URL, set it as the form's `action`.
-8. **Payment:** No processor is required to start — collect payment via Venmo or Zelle after a session is booked, as noted on the site. If you later want in-site payment links, Stripe Payment Links is the simplest upgrade (no code changes needed beyond adding a button).
+7. **Payment:** Zelle (470-841-2774) and `paypal.me/MrO1976` are already on the site — see `open-items.md` for the one thing still pending (converting the PayPal account from personal to Business before real payments start).
+
+There's no contact form on the site — it was removed in favor of direct text/voicemail/email/Cal.com links, so there's no form backend (Netlify Forms, Formspree, etc.) to set up.
 
 ## Phase 4 — Choose a host and deploy
 
@@ -55,7 +50,7 @@ While you're still editing content, it's useful to have a shareable preview link
 
 ## Phase 6 — Test and launch
 
-16. On a phone and a laptop, check: every nav link scrolls correctly, the "Text" and voicemail buttons open the right app, the Cal.com link opens the real booking page, and the contact form actually delivers a test message.
+16. On a phone and a laptop, check: every nav link scrolls correctly, the "Text," voicemail, and email links open the right app, and the Cal.com link opens the real booking page.
 17. Run the live URL through Google's PageSpeed Insights or Lighthouse (built into Chrome DevTools) as a quick sanity check.
 18. Once satisfied, share the domain: update the business card, any social profiles, and email signature with the new URL.
 

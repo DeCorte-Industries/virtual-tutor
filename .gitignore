@@ -30,5 +30,14 @@ open-items.md
 turtle.jpeg
 Wounded_Warrior_Charity.png
 
+# No longer used — Charities section switched to text wordmarks for all
+# three orgs (see open-items.md), so this logo file is now orphaned.
+images/wounded-warrior-project.png
+
 # Note: images/orca.jpg and images/sextant.jpg ARE tracked — they're
 # real site assets referenced in index.html, not internal reference material.
+
+# Raw, uncompressed original — the optimized images/ho_bio_pic.jpg is the
+# tracked site asset actually used in index.html. (Couldn't delete this
+# original from the workspace folder, so it's ignored instead.)
+images/ho_bio_pic.png

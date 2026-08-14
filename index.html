@@ -282,6 +282,7 @@
   /* ---------- Contact ---------- */
   .contact-grid{display:grid;gap:40px;grid-template-columns:1fr;}
   @media(min-width:860px){.contact-grid{grid-template-columns:1fr 1fr;}}
+  .contact-grid.single{grid-template-columns:1fr;max-width:560px;margin:0 auto;}
   .contact-card{
     background:var(--chalk-bg-2);border:1px solid var(--line);border-radius:var(--radius);
     padding:30px;
@@ -476,8 +477,8 @@
         <div class="course-card reveal">
           <span class="bar" style="background:var(--gold)"></span>
           <span class="step">Group sessions</span>
-          <h3>Up to 4 students</h3>
-          <p>A discounted per-student rate for small groups. Ask Henry for current group pricing.</p>
+          <h3>$40 / student / hour</h3>
+          <p>Up to 4 students per group — $10 off the standard $50/hr rate, per student.</p>
         </div>
         <div class="course-card reveal">
           <span class="bar" style="background:var(--teal)"></span>
@@ -493,12 +494,13 @@
             <li><span class="day">Tue – Thu</span><span>4:00 – 8:00 PM</span></li>
             <li><span class="day">Wed</span><span>3:30 – 5:30 PM</span></li>
             <li><span class="day">Fri</span><span>6:00 – 9:00 PM</span></li>
+            <li><span class="day">Sat</span><span>1:00 – 9:00 PM</span></li>
+            <li><span class="day">Sun</span><span>7:00 – 9:00 PM</span></li>
           </ul>
-          <p class="form-note" style="margin-top:14px;">Weekend hours (Saturday and Sunday) are still being finalized — check with Henry directly for those slots.</p>
         </div>
         <div class="contact-card reveal">
           <h3>Payment &amp; cancellation</h3>
-          <p>Payment is due upfront, by the Sunday before the week of your scheduled session(s), via Zelle or PayPal. <em>(Handles to be added once confirmed.)</em></p>
+          <p>Payment is due upfront, by the Sunday before the week of your scheduled session(s), via Zelle (470-841-2774) or <a href="https://paypal.me/MrO1976" target="_blank" rel="noopener noreferrer">paypal.me/MrO1976</a>.</p>
           <p style="margin-bottom:0;">Need to reschedule? Give at least 48 hours' notice by text. Without that notice, payment is forfeited and a new session requires new payment. Outside of emergencies, booked sessions aren't cancelled.</p>
         </div>
       </div>
@@ -510,8 +512,7 @@
   <section id="about">
     <div class="wrap about">
       <div class="about-portrait reveal">
-        <span class="initials">HO</span>
-        <span class="tag mono">Photo of Henry — add before launch</span>
+        <img src="images/ho_bio_pic.jpg" alt="Henry Oglesby smiling, wearing a navy suit" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);" />
       </div>
       <div class="about-copy reveal">
         <span class="mono" style="color:var(--teal);display:block;margin-bottom:14px;">About Henry</span>
@@ -553,8 +554,8 @@
       </div>
       <div class="charities">
         <div class="charity-card reveal">
-          <div class="charity-logo">
-            <img src="images/wounded-warrior-project.png" alt="Wounded Warrior Project logo" loading="lazy" />
+          <div class="charity-logo charity-logo-text">
+            <span>Wounded Warrior<br />Project</span>
           </div>
           <h3>Wounded Warrior Project</h3>
           <p>Supports post-9/11 wounded, ill, and injured veterans, service members, and their families.</p>
@@ -577,7 +578,7 @@
           <a href="https://www.stjude.org" target="_blank" rel="noopener noreferrer">Visit site <span aria-hidden="true">→</span></a>
         </div>
       </div>
-      <p class="sample-note"><strong>Note:</strong> Humane World for Animals and St. Jude show text placeholders instead of real logos — see <code>open-items.md</code> for how to add official logo files.</p>
+      <p class="sample-note"><strong>Note:</strong> shown as text wordmarks by design, not as placeholders — all three organizations' logo/linking policies require permission for third-party logo use, so text links are the compliant choice here.</p>
     </div>
   </section>
 
@@ -614,9 +615,9 @@
       <div class="section-head reveal">
         <span class="mono">Get started</span>
         <h2>Book the first session.</h2>
-        <p>Fastest way to start: send a text. Prefer to write it out? Use the form and Henry will follow up within a day.</p>
+        <p>Fastest way to start: send a text — Henry usually replies within a day.</p>
       </div>
-      <div class="contact-grid">
+      <div class="contact-grid single">
         <div class="contact-card reveal">
           <h3>Reach Henry directly</h3>
           <p>For the quickest response, send a text — Henry replies by text or voicemail, so calls may not get picked up right away.</p>
@@ -627,29 +628,6 @@
             <a href="#" aria-disabled="true">Book on Cal.com <span aria-hidden="true">→</span></a>
           </div>
           <p class="form-note" style="margin-top:16px;">Payment is due upfront via Zelle or PayPal — see <a href="#rates">rates &amp; policy</a> for full details.</p>
-        </div>
-        <div class="contact-card reveal">
-          <h3>Send a message</h3>
-          <form>
-            <div>
-              <label for="name">Your name</label>
-              <input id="name" name="name" type="text" placeholder="Jane Smith" />
-            </div>
-            <div>
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="jane@email.com" />
-            </div>
-            <div>
-              <label for="subject">Course</label>
-              <input id="subject" name="subject" type="text" placeholder="e.g. Algebra 2" />
-            </div>
-            <div>
-              <label for="message">What's going on?</label>
-              <textarea id="message" name="message" placeholder="Tell Henry what your student needs help with"></textarea>
-            </div>
-            <button class="btn btn-primary" type="submit" style="justify-self:start;">Send message</button>
-            <p class="form-note">This form is a design placeholder — connect it to Netlify Forms or Formspree before launch.</p>
-          </form>
         </div>
       </div>
     </div>
