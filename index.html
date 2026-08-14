@@ -110,6 +110,34 @@
   .btn-ghost:hover{border-color:var(--chalk-white-dim);}
   .btn-static{cursor:default;}
   .btn-static:hover{transform:none;border-color:var(--line);}
+
+  /* ---------- Verse of the day banner ---------- */
+  .verse-banner{
+    background:var(--chalk-bg-2);
+    border-bottom:1px solid var(--line);
+    padding:10px 0;
+  }
+  .verse-banner.hidden{display:none;}
+  .verse-banner-inner{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    position:relative;padding-right:36px;
+  }
+  .verse-label{color:var(--gold);flex-shrink:0;}
+  .verse-text{
+    margin:0;font-size:0.92rem;color:var(--chalk-white-dim);
+    font-style:italic;flex:1;min-width:200px;
+  }
+  .verse-ref{
+    font-style:normal;color:var(--chalk-white);opacity:0.85;font-size:0.85rem;
+    margin-left:6px;white-space:nowrap;
+  }
+  .verse-dismiss{
+    position:absolute;right:0;top:50%;transform:translateY(-50%);
+    background:none;border:none;color:var(--chalk-white-dim);
+    font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 8px;
+  }
+  .verse-dismiss:hover{color:var(--chalk-white);}
+
   .nav-cta{display:none;}
   @media(min-width:860px){.nav-cta{display:inline-flex;}}
   .menu-toggle{display:inline-flex;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--chalk-white);}
@@ -340,6 +368,14 @@
 </head>
 <body>
 
+<div id="verseBanner" class="verse-banner">
+  <div class="wrap verse-banner-inner">
+    <span class="mono verse-label">Verse of the Day</span>
+    <p class="verse-text" id="verseLine">Loading…</p>
+    <button id="verseDismiss" class="verse-dismiss" aria-label="Dismiss verse of the day">&times;</button>
+  </div>
+</div>
+
 <div class="spine-strip"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span><span class="c5"></span></div>
 
 <header>
@@ -525,8 +561,7 @@
         <span class="mono" style="color:var(--teal);display:block;margin-bottom:14px;">About Henry</span>
         <h2 style="margin-bottom:18px;font-size:clamp(1.6rem,3vw,2.2rem);">Math clicks when someone slows down long enough to explain it right.</h2>
         <p>Henry has spent over 30 years teaching and tutoring math — in morning school, summer school, evening school, and virtual classrooms. He holds a BS in Mathematics from Barton College, a 7–12 mathematics teaching certification, and a Master's in Mathematics Education from Georgia State University, with additional coursework at Georgia Tech and UGA. Now a retired teacher, he tutors as often as he can.</p>
-        <!-- TODO: swap in Henry's personal "why I tutor" story once he signs off on the draft in site-change-plan.md -->
-        <p>Every session starts with the actual homework or test on the table — not a generic worksheet — and works backward from there on a shared digital whiteboard, until the concept holds on its own.</p>
+        <p>Every session starts with work that actually mirrors the homework or test being given, and works backward from there on a shared digital whiteboard, until the concept holds on its own.</p>
         <div class="about-facts">
           <span class="fact">30+ years teaching &amp; tutoring</span>
           <span class="fact">Algebra 1 through Calculus AB</span>
@@ -650,6 +685,80 @@
 </footer>
 
 <script>
+  // ---------- Verse of the Day ----------
+  // Static rotating list for now (Henry's request). Text is KJV (public domain),
+  // so there's no copyright/licensing issue reproducing it verbatim.
+  //
+  // FUTURE UPGRADE PATH: to pull a live "verse of the day" instead of this static
+  // list, swap the lookup in initVerseBanner() below for a fetch to a free, no-key
+  // Bible API — e.g. https://bible-api.com/data/web/today or
+  // https://beta.ourmanna.com/api/v1/get — and keep VERSES as an offline/error
+  // fallback in case the API call fails. Everything else (rotation display,
+  // dismiss button, styling) stays the same either way.
+  const VERSES = [
+    { text: "Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.", ref: "Proverbs 3:5–6" },
+    { text: "I can do all things through Christ which strengtheneth me.", ref: "Philippians 4:13" },
+    { text: "The fear of the LORD is the beginning of knowledge: but fools despise wisdom and instruction.", ref: "Proverbs 1:7" },
+    { text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", ref: "Jeremiah 29:11" },
+    { text: "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.", ref: "Isaiah 40:31" },
+    { text: "For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding.", ref: "Proverbs 2:6" },
+    { text: "And whatsoever ye do, do it heartily, as to the Lord, and not unto men.", ref: "Colossians 3:23" },
+    { text: "Train up a child in the way he should go: and when he is old, he will not depart from it.", ref: "Proverbs 22:6" },
+    { text: "Thy word is a lamp unto my feet, and a light unto my path.", ref: "Psalm 119:105" },
+    { text: "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.", ref: "James 1:5" },
+    { text: "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.", ref: "2 Timothy 1:7" },
+    { text: "To every thing there is a season, and a time to every purpose under the heaven.", ref: "Ecclesiastes 3:1" },
+    { text: "I will instruct thee and teach thee in the way which thou shalt go: I will guide thee with mine eye.", ref: "Psalm 32:8" },
+    { text: "And let us not be weary in well doing: for in due season we shall reap, if we faint not.", ref: "Galatians 6:9" },
+    { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee.", ref: "Isaiah 41:10" },
+    { text: "Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you.", ref: "Matthew 7:7" },
+    { text: "A man's heart deviseth his way: but the LORD directeth his steps.", ref: "Proverbs 16:9" },
+    { text: "Iron sharpeneth iron; so a man sharpeneth the countenance of his friend.", ref: "Proverbs 27:17" },
+    { text: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?", ref: "Psalm 27:1" },
+    { text: "Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.", ref: "Joshua 1:9" },
+    { text: "Happy is the man that findeth wisdom, and the man that getteth understanding.", ref: "Proverbs 3:13" },
+    { text: "And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.", ref: "Romans 12:2" },
+    { text: "Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding.", ref: "Proverbs 4:7" },
+    { text: "God is our refuge and strength, a very present help in trouble.", ref: "Psalm 46:1" },
+    { text: "The fear of the LORD is the instruction of wisdom; and before honour is humility.", ref: "Proverbs 15:33" },
+    { text: "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.", ref: "Philippians 4:6" },
+    { text: "The heart of the prudent getteth knowledge; and the ear of the wise seeketh knowledge.", ref: "Proverbs 18:15" },
+    { text: "It is of the LORD's mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.", ref: "Lamentations 3:22–23" },
+    { text: "A wise man will hear, and will increase learning; and a man of understanding shall attain unto wise counsels.", ref: "Proverbs 1:5" },
+    { text: "Be strong and of a good courage, fear not, nor be afraid of them: for the LORD thy God, he it is that doth go with thee; he will not fail thee, nor forsake thee.", ref: "Deuteronomy 31:6" }
+  ];
+
+  function dayOfYear(date) {
+    const start = new Date(date.getFullYear(), 0, 0);
+    return Math.floor((date - start) / 86400000);
+  }
+
+  function initVerseBanner() {
+    const banner = document.getElementById('verseBanner');
+    const line = document.getElementById('verseLine');
+    const dismiss = document.getElementById('verseDismiss');
+    if (!banner || !line || !dismiss) return;
+
+    const todayKey = new Date().toISOString().slice(0, 10);
+    if (localStorage.getItem('verseDismissedOn') === todayKey) {
+      banner.classList.add('hidden');
+      return;
+    }
+
+    const verse = VERSES[dayOfYear(new Date()) % VERSES.length];
+    line.textContent = '"' + verse.text + '"';
+    const ref = document.createElement('span');
+    ref.className = 'verse-ref';
+    ref.textContent = '— ' + verse.ref;
+    line.appendChild(ref);
+
+    dismiss.addEventListener('click', () => {
+      banner.classList.add('hidden');
+      localStorage.setItem('verseDismissedOn', todayKey);
+    });
+  }
+  initVerseBanner();
+
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
   menuToggle.addEventListener('click', () => {
