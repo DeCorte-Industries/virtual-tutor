@@ -20,6 +20,7 @@ dist/
 # (contains Henry's personal contact info, unpublished pricing details,
 # and the raw draft of his bio — keep these local only)
 *.pdf
+!open_items_for_henry.pdf
 business_card_front.jpeg
 business_card_back.jpeg
 questions-for-henry.md
