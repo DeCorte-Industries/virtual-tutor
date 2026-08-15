@@ -267,6 +267,7 @@
   }
   .aside-card:hover{transform:translateY(-4px);border-color:rgba(245,241,232,0.3);}
   .aside-card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--chalk-bg);}
+  .aside-card img.fit-contain{object-fit:contain;padding:18px;box-sizing:border-box;}
   .aside-card .cap{padding:16px 18px;font-size:0.9rem;color:var(--chalk-white-dim);margin:0;}
   .aside-card .cap strong{color:var(--chalk-white);}
 
@@ -357,6 +358,13 @@
   }
   .footer-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;}
   .footer-row p{margin:0;font-size:0.85rem;color:var(--chalk-white-dim);}
+  .footer-credit{
+    text-align:center;margin-top:16px;padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:0.72rem;color:var(--chalk-white-dim);opacity:0.7;
+  }
+  .footer-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
+  .footer-credit a:hover{color:var(--chalk-white);}
 
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
@@ -578,7 +586,7 @@
           <p class="cap"><strong>Favorite animal:</strong> the orca.</p>
         </div>
         <div class="aside-card reveal">
-          <img src="images/sextant.jpg" alt="An antique brass sextant used for celestial navigation" loading="lazy" />
+          <img class="fit-contain" src="images/sextant.jpg" alt="An antique brass sextant used for celestial navigation" loading="lazy" />
           <p class="cap">A reminder that math has always charted the way — from celestial navigation to Calculus AB.</p>
         </div>
       </div>
@@ -681,6 +689,9 @@
   <div class="wrap footer-row">
     <p>© 2026 Henry Oglesby · Virtual Private Math Tutor</p>
     <p>470-841-2774 · text preferred</p>
+  </div>
+  <div class="wrap">
+    <p class="footer-credit mono">Site created by <a href="https://decorteindustries.com" target="_blank" rel="noopener noreferrer">DeCorte Industries</a></p>
   </div>
 </footer>
 
