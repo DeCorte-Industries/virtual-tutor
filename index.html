@@ -400,7 +400,7 @@
       <a href="#charities">Charities</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary nav-cta">Book a session</a>
+    <a href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary nav-cta">Book a session</a>
   </nav>
 </header>
 
@@ -412,8 +412,8 @@
       <h1>One tutor, one student, every step from <em>Algebra&nbsp;1</em> to <em>Calculus&nbsp;AB</em>.</h1>
       <p class="lede">Henry Oglesby teaches live math sessions online — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
       <div class="hero-ctas">
-        <a class="btn btn-teal" href="https://cal.com/hoglesby/intro-call" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book a free 10-minute intro call</a>
-        <a class="btn btn-primary" href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a 1-hour session</a>
+        <a class="btn btn-teal" href="javascript:void(0)" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book a free 10-minute intro call</a>
+        <a class="btn btn-primary" href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a 1-hour session</a>
       </div>
       <div class="ladder-row" aria-label="Subjects taught, in sequence">
         <span class="ladder-chip"><span class="dot" style="background:var(--coral)"></span>Algebra 1</span>
@@ -512,7 +512,7 @@
           <span class="step">1:1 sessions</span>
           <h3>$50 / hour</h3>
           <p>Choose a 1-hour or 2-hour session. Two-hour sessions run straight through — no breaks.</p>
-          <a class="book-link" href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a session <span aria-hidden="true">→</span></a>
+          <a class="book-link" href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a session <span aria-hidden="true">→</span></a>
         </div>
         <div class="course-card reveal">
           <span class="bar" style="background:var(--gold)"></span>
@@ -525,7 +525,7 @@
           <span class="step">First step</span>
           <h3>10-minute intro call</h3>
           <p>No charge — a short call to talk through what your student needs before booking a paid session.</p>
-          <a class="book-link" href="https://cal.com/hoglesby/intro-call" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book the intro call <span aria-hidden="true">→</span></a>
+          <a class="book-link" href="javascript:void(0)" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book the intro call <span aria-hidden="true">→</span></a>
         </div>
       </div>
       <div class="contact-grid" style="margin-top:40px;">
@@ -657,8 +657,8 @@
           <h3>Book online</h3>
           <p>Choose whichever fits — a free intro call to talk it through first, or go straight into a paid session.</p>
           <div class="contact-actions">
-            <a href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary">Book a 1-hour tutoring session <span aria-hidden="true">→</span></a>
-            <a href="https://cal.com/hoglesby/intro-call" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal">Book a free 10-minute intro call <span aria-hidden="true">→</span></a>
+            <a href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary">Book a 1-hour tutoring session <span aria-hidden="true">→</span></a>
+            <a href="javascript:void(0)" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal">Book a free 10-minute intro call <span aria-hidden="true">→</span></a>
             <a href="mailto:info@mathwithhenry.com" class="btn btn-ghost">General questions? Email info@mathwithhenry.com <span aria-hidden="true">→</span></a>
           </div>
           <p class="form-note" style="margin-top:16px;">Payment is due upfront via Zelle or PayPal — see <a href="#rates">rates &amp; policy</a> for full details.</p>
@@ -682,9 +682,10 @@
 <script type="text/javascript">
   // ---------- Cal.com booking embed ----------
   // Loads Cal.com's embed.js so booking links open as an in-page popup
-  // instead of navigating to a new tab. Any element on the page with
-  // data-cal-link/data-cal-namespace attributes is automatically wired up
-  // by this snippet — no extra JS needed per button.
+  // instead of navigating to a new tab or to cal.com directly. See the
+  // click-binding block below (after the Cal("init", ...) calls) for why
+  // every booking link's href is "javascript:void(0)" instead of a real
+  // cal.com URL, and how the popup gets triggered explicitly.
   (function (C, A, L) {
     let p = function (a, ar) { a.q.push(ar); };
     let d = C.document;
@@ -717,6 +718,27 @@
 
   Cal("init", "oneHour", { origin: "https://cal.com" });
   Cal.ns.oneHour("ui", { theme: "dark", layout: "month_view" });
+
+  // Cal.com's automatic data-cal-link click-binding only attaches once
+  // embed.js finishes its own network fetch, which can lose the race
+  // against a real click on a real https://cal.com href — the browser
+  // just follows the link and leaves the page. To make the popup reliable
+  // on the very first click, every booking link below has its href set to
+  // "javascript:void(0)" (no real destination to fall through to) and this
+  // listener calls the modal instruction directly. Cal("init", ...) above
+  // safely queues that call even before embed.js has loaded, so there's
+  // no race condition — the popup always opens instead of navigating away.
+  document.querySelectorAll("[data-cal-link]").forEach(function (el) {
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      const ns = el.getAttribute("data-cal-namespace");
+      const calLink = el.getAttribute("data-cal-link");
+      let config = {};
+      try { config = JSON.parse(el.getAttribute("data-cal-config") || "{}"); } catch (err) {}
+      const api = ns ? Cal.ns[ns] : Cal;
+      api("modal", { calLink: calLink, config: config });
+    });
+  });
 </script>
 
 <script>
