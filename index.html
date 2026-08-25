@@ -739,6 +739,31 @@
       api("modal", { calLink: calLink, config: config });
     });
   });
+
+  // Safety net for a Cal.com embed quirk: when its popup closes, Cal sets
+  // document.body.style.overflow = "hidden" while open and is supposed to
+  // clear it once fully closed. The close itself takes a few seconds (the
+  // "X" button shows a spinner during that window), and clicking "X" again
+  // during that transition can interrupt Cal's own cleanup and leave the
+  // page's scrolling permanently locked, even though it visually looks
+  // closed, until a hard refresh. This watches for the popup actually being
+  // gone and force-clears the lock as a fallback so a mistimed second click
+  // can never leave the site unscrollable.
+  (function () {
+    function fixStuckScrollLock() {
+      const box = document.querySelector("cal-modal-box");
+      const isClosed = !box || getComputedStyle(box).visibility === "hidden";
+      if (isClosed && document.body.style.overflow === "hidden") {
+        document.body.style.overflow = "";
+      }
+    }
+    new MutationObserver(fixStuckScrollLock).observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["style"],
+    });
+  })();
 </script>
 
 <script>
