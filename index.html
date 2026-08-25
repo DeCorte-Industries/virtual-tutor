@@ -400,7 +400,7 @@
       <a href="#charities">Charities</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary nav-cta">Book a session</a>
+    <a href="javascript:void(0)" data-cal-namespace="oneHourNav" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary nav-cta">Book a session</a>
   </nav>
 </header>
 
@@ -412,8 +412,8 @@
       <h1>One tutor, one student, every step from <em>Algebra&nbsp;1</em> to <em>Calculus&nbsp;AB</em>.</h1>
       <p class="lede">Henry Oglesby teaches live math sessions online — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
       <div class="hero-ctas">
-        <a class="btn btn-teal" href="javascript:void(0)" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book a free 10-minute intro call</a>
-        <a class="btn btn-primary" href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a 1-hour session</a>
+        <a class="btn btn-teal" href="javascript:void(0)" data-cal-namespace="introCallHero" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book a free 10-minute intro call</a>
+        <a class="btn btn-primary" href="javascript:void(0)" data-cal-namespace="oneHourHero" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a 1-hour session</a>
       </div>
       <div class="ladder-row" aria-label="Subjects taught, in sequence">
         <span class="ladder-chip"><span class="dot" style="background:var(--coral)"></span>Algebra 1</span>
@@ -512,7 +512,7 @@
           <span class="step">1:1 sessions</span>
           <h3>$50 / hour</h3>
           <p>Choose a 1-hour or 2-hour session. Two-hour sessions run straight through — no breaks.</p>
-          <a class="book-link" href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a session <span aria-hidden="true">→</span></a>
+          <a class="book-link" href="javascript:void(0)" data-cal-namespace="oneHourRates" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a session <span aria-hidden="true">→</span></a>
         </div>
         <div class="course-card reveal">
           <span class="bar" style="background:var(--gold)"></span>
@@ -525,7 +525,7 @@
           <span class="step">First step</span>
           <h3>10-minute intro call</h3>
           <p>No charge — a short call to talk through what your student needs before booking a paid session.</p>
-          <a class="book-link" href="javascript:void(0)" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book the intro call <span aria-hidden="true">→</span></a>
+          <a class="book-link" href="javascript:void(0)" data-cal-namespace="introCallRates" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book the intro call <span aria-hidden="true">→</span></a>
         </div>
       </div>
       <div class="contact-grid" style="margin-top:40px;">
@@ -657,8 +657,8 @@
           <h3>Book online</h3>
           <p>Choose whichever fits — a free intro call to talk it through first, or go straight into a paid session.</p>
           <div class="contact-actions">
-            <a href="javascript:void(0)" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary">Book a 1-hour tutoring session <span aria-hidden="true">→</span></a>
-            <a href="javascript:void(0)" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal">Book a free 10-minute intro call <span aria-hidden="true">→</span></a>
+            <a href="javascript:void(0)" data-cal-namespace="oneHourContact" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary">Book a 1-hour tutoring session <span aria-hidden="true">→</span></a>
+            <a href="javascript:void(0)" data-cal-namespace="introCallContact" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal">Book a free 10-minute intro call <span aria-hidden="true">→</span></a>
             <a href="mailto:info@mathwithhenry.com" class="btn btn-ghost">General questions? Email info@mathwithhenry.com <span aria-hidden="true">→</span></a>
           </div>
           <p class="form-note" style="margin-top:16px;">Payment is due upfront via Zelle or PayPal — see <a href="#rates">rates &amp; policy</a> for full details.</p>
@@ -713,11 +713,26 @@
     };
   })(window, "https://app.cal.com/embed/embed.js", "init");
 
-  Cal("init", "introCall", { origin: "https://cal.com" });
-  Cal.ns.introCall("ui", { theme: "dark", layout: "month_view" });
-
-  Cal("init", "oneHour", { origin: "https://cal.com" });
-  Cal.ns.oneHour("ui", { theme: "dark", layout: "month_view" });
+  // Each booking link on the page gets its own Cal namespace, even though
+  // several links point at the same event type. Sharing one namespace
+  // ("introCall"/"oneHour") across multiple buttons caused Cal's embed to
+  // create a second, duplicate <cal-modal-box> the moment you opened it
+  // from more than one spot on the page — and closing one left the other
+  // stuck mid-close, spinning forever with the page permanently locked.
+  // One namespace per physical link avoids that collision entirely.
+  const CAL_NAMESPACES = [
+    "oneHourNav",
+    "introCallHero",
+    "oneHourHero",
+    "oneHourRates",
+    "introCallRates",
+    "oneHourContact",
+    "introCallContact",
+  ];
+  CAL_NAMESPACES.forEach(function (ns) {
+    Cal("init", ns, { origin: "https://cal.com" });
+    Cal.ns[ns]("ui", { theme: "dark", layout: "month_view" });
+  });
 
   // Cal.com's automatic data-cal-link click-binding only attaches once
   // embed.js finishes its own network fetch, which can lose the race
@@ -762,6 +777,33 @@
       subtree: true,
       attributes: true,
       attributeFilter: ["style"],
+    });
+  })();
+
+  // Cal.com's own "X" close button isn't always reliable — closing can
+  // hang indefinitely (spinner never resolves, popup never disappears)
+  // rather than just being slow. Since we can't fix Cal's internal embed
+  // code, this gives two independent, guaranteed-working ways to close the
+  // popup that we fully control: clicking the dimmed backdrop behind the
+  // calendar card, or pressing Escape. Both instantly remove the popup and
+  // restore scrolling, regardless of whatever state Cal's own close
+  // handshake is stuck in.
+  (function () {
+    function forceCloseCalPopup() {
+      document.querySelectorAll("cal-modal-box").forEach(function (box) {
+        box.remove();
+      });
+      document.body.style.overflow = "";
+    }
+    document.addEventListener("click", function (e) {
+      if (e.target && e.target.tagName === "CAL-MODAL-BOX") {
+        forceCloseCalPopup();
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        forceCloseCalPopup();
+      }
     });
   })();
 </script>
