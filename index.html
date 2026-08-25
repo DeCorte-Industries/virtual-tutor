@@ -400,7 +400,7 @@
       <a href="#charities">Charities</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="https://cal.com/hoglesby/one-hour-tutoring" target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-cta">Book a session</a>
+    <a href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary nav-cta">Book a session</a>
   </nav>
 </header>
 
@@ -412,8 +412,8 @@
       <h1>One tutor, one student, every step from <em>Algebra&nbsp;1</em> to <em>Calculus&nbsp;AB</em>.</h1>
       <p class="lede">Henry Oglesby teaches live math sessions online — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
       <div class="hero-ctas">
-        <a class="btn btn-teal" href="https://cal.com/hoglesby/intro-call" target="_blank" rel="noopener noreferrer">Book a free 10-minute intro call</a>
-        <a class="btn btn-primary" href="https://cal.com/hoglesby/one-hour-tutoring" target="_blank" rel="noopener noreferrer">Book a 1-hour session</a>
+        <a class="btn btn-teal" href="https://cal.com/hoglesby/intro-call" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book a free 10-minute intro call</a>
+        <a class="btn btn-primary" href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a 1-hour session</a>
       </div>
       <div class="ladder-row" aria-label="Subjects taught, in sequence">
         <span class="ladder-chip"><span class="dot" style="background:var(--coral)"></span>Algebra 1</span>
@@ -512,7 +512,7 @@
           <span class="step">1:1 sessions</span>
           <h3>$50 / hour</h3>
           <p>Choose a 1-hour or 2-hour session. Two-hour sessions run straight through — no breaks.</p>
-          <a class="book-link" href="https://cal.com/hoglesby/one-hour-tutoring" target="_blank" rel="noopener noreferrer">Book a session <span aria-hidden="true">→</span></a>
+          <a class="book-link" href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a session <span aria-hidden="true">→</span></a>
         </div>
         <div class="course-card reveal">
           <span class="bar" style="background:var(--gold)"></span>
@@ -525,7 +525,7 @@
           <span class="step">First step</span>
           <h3>10-minute intro call</h3>
           <p>No charge — a short call to talk through what your student needs before booking a paid session.</p>
-          <a class="book-link" href="https://cal.com/hoglesby/intro-call" target="_blank" rel="noopener noreferrer">Book the intro call <span aria-hidden="true">→</span></a>
+          <a class="book-link" href="https://cal.com/hoglesby/intro-call" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book the intro call <span aria-hidden="true">→</span></a>
         </div>
       </div>
       <div class="contact-grid" style="margin-top:40px;">
@@ -657,8 +657,8 @@
           <h3>Book online</h3>
           <p>Choose whichever fits — a free intro call to talk it through first, or go straight into a paid session.</p>
           <div class="contact-actions">
-            <a href="https://cal.com/hoglesby/one-hour-tutoring" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book a 1-hour tutoring session <span aria-hidden="true">→</span></a>
-            <a href="https://cal.com/hoglesby/intro-call" target="_blank" rel="noopener noreferrer" class="btn btn-teal">Book a free 10-minute intro call <span aria-hidden="true">→</span></a>
+            <a href="https://cal.com/hoglesby/one-hour-tutoring" data-cal-namespace="oneHour" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary">Book a 1-hour tutoring session <span aria-hidden="true">→</span></a>
+            <a href="https://cal.com/hoglesby/intro-call" data-cal-namespace="introCall" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal">Book a free 10-minute intro call <span aria-hidden="true">→</span></a>
             <a href="mailto:info@mathwithhenry.com" class="btn btn-ghost">General questions? Email info@mathwithhenry.com <span aria-hidden="true">→</span></a>
           </div>
           <p class="form-note" style="margin-top:16px;">Payment is due upfront via Zelle or PayPal — see <a href="#rates">rates &amp; policy</a> for full details.</p>
@@ -678,6 +678,46 @@
     <p class="footer-credit mono">Site created by <a href="https://decorteindustries.com" target="_blank" rel="noopener noreferrer">DeCorte Industries</a></p>
   </div>
 </footer>
+
+<script type="text/javascript">
+  // ---------- Cal.com booking embed ----------
+  // Loads Cal.com's embed.js so booking links open as an in-page popup
+  // instead of navigating to a new tab. Any element on the page with
+  // data-cal-link/data-cal-namespace attributes is automatically wired up
+  // by this snippet — no extra JS needed per button.
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal;
+      let ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement("script")).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === "string") {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          p(cal.ns[namespace], ar);
+          p(cal, ["initNamespace", namespace]);
+        } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  Cal("init", "introCall", { origin: "https://cal.com" });
+  Cal.ns.introCall("ui", { theme: "dark", layout: "month_view" });
+
+  Cal("init", "oneHour", { origin: "https://cal.com" });
+  Cal.ns.oneHour("ui", { theme: "dark", layout: "month_view" });
+</script>
 
 <script>
   // ---------- Verse of the Day ----------
