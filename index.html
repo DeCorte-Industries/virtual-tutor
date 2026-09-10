@@ -302,6 +302,19 @@
   }
   .charity-card a:hover{text-decoration:underline;}
 
+  /* ---------- Testimonials ---------- */
+  .testimonials{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+  .quote-card{
+    position:relative;overflow:hidden;
+    background:var(--chalk-bg-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px 26px;
+  }
+  .quote-card .bar{position:absolute;top:0;left:0;right:0;height:6px;}
+  .quote-card p.q{font-size:1.04rem;line-height:1.6;margin:6px 0 20px;color:var(--chalk-white);}
+  .quote-card .who{display:flex;align-items:center;gap:10px;}
+  .quote-card .who .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .quote-card .who span{font-size:0.9rem;color:var(--chalk-white-dim);}
+
   /* ---------- Contact ---------- */
   .contact-grid{display:grid;gap:40px;grid-template-columns:1fr;}
   @media(min-width:860px){.contact-grid{grid-template-columns:1fr 1fr;}}
@@ -632,12 +645,13 @@
     <div class="wrap">
       <div class="section-head reveal">
         <span class="mono">What families say</span>
-        <h2>Testimonials — coming soon.</h2>
+        <h2>What sessions with Henry feel like.</h2>
       </div>
-      <div class="contact-grid single">
-        <div class="contact-card reveal" style="text-align:center;">
-          <h3>Coming soon</h3>
-          <p style="margin-bottom:0;">Real quotes from parents and students will be added here soon.</p>
+      <div class="testimonials">
+        <div class="quote-card reveal">
+          <span class="bar" style="background:var(--gold)"></span>
+          <p class="q">"Earlier this year, my son was struggling in Geometry and we hired two different tutors, but his grade didn't change. He was still struggling and failing his class. I reached out to a couple of friends, and one of them referred me to Mr. Oglesby — and what a difference. My son was able to understand his work within one session with him, because Mr. Oglesby took his time to teach him and made sure he understood the assignment before moving on to a different problem. My son not only understood his work, but turned a failing grade into a B. I highly recommend him, because he cared about my son's success in math, not just earning a dollar."</p>
+          <div class="who"><span class="dot" style="background:var(--gold)"></span><span>Mrs. Allison, parent of a Geometry student</span></div>
         </div>
       </div>
     </div>
