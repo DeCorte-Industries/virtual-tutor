@@ -1,0 +1,4 @@
+# Publish only the site folder so planning docs, PDFs and other repo files
+# are never served from mathwithhenry.com.
+[build]
+  publish = "public"

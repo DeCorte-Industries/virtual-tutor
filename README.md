@@ -1,13 +1,16 @@
 # Math with Henry — Tutoring Website
 
 Website for Henry Oglesby's private math tutoring business — virtual sessions
-(with in-person available at the local library), Algebra 1 through Calculus AB.
+(online only), Algebra 1 through Calculus AB.
 
-**Planned domain:** mathwithhenry.com *(not yet registered — see `deployment-steps.md`)*
+**Live at:** https://mathwithhenry.com (hosted on Netlify, deployed from this repo's `master` branch)
 
 ## What's in this folder
 
-- `index.html` — the website itself. Single page, no build step, no dependencies.
+- `public/` — the published site (Netlify's publish directory, set in `netlify.toml`). Nothing outside this folder is served.
+  - `public/index.html` — the website itself. Single page, no build step, no dependencies.
+  - `public/images/` — site images and favicon.
+- `netlify.toml` — tells Netlify to publish only `public/`.
 - `deployment-steps.md` — step-by-step guide from zero to a live site: domain, hosting, DNS, forms, booking.
 - `LICENSE` — usage terms for this repository.
 
@@ -18,10 +21,10 @@ The following files are for internal planning only and are excluded from version
 
 ## Running it locally
 
-No build tools required. Either open `index.html` directly in a browser, or serve it:
+No build tools required. Either open `public/index.html` directly in a browser, or serve it:
 
 ```
-python3 -m http.server 8000
+python3 -m http.server 8000 --directory public
 ```
 
 Then visit `http://localhost:8000`.
@@ -32,8 +35,7 @@ See `deployment-steps.md` for the full path to a live site — registering the d
 
 ## Status
 
-Design and core content are in place. Still pending before launch — see `open-items.md`:
-group session pricing, Saturday/Sunday availability, Zelle/PayPal handles, a headshot photo, real testimonials, and Henry's sign-off on his personal bio.
+Live. Remaining items are tracked in `open-items.md` (local only): PayPal Business account conversion, Henry's verse-list preference, and more testimonials.
 
 ## License
 

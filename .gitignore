@@ -20,7 +20,6 @@ dist/
 # (contains Henry's personal contact info, unpublished pricing details,
 # and the raw draft of his bio — keep these local only)
 *.pdf
-!open_items_for_henry.pdf
 business_card_front.jpeg
 business_card_back.jpeg
 questions-for-henry.md
@@ -34,7 +33,6 @@ Wounded_Warrior_Charity.png
 
 # No longer used — Charities section switched to text wordmarks for all
 # three orgs (see open-items.md), so this logo file is now orphaned.
-images/wounded-warrior-project.png
 
 # Note: images/orca.jpg and images/sextant.jpg ARE tracked — they're
 # real site assets referenced in index.html, not internal reference material.
@@ -42,4 +40,11 @@ images/wounded-warrior-project.png
 # Raw, uncompressed original — the optimized images/ho_bio_pic.jpg is the
 # tracked site asset actually used in index.html. (Couldn't delete this
 # original from the workspace folder, so it's ignored instead.)
-images/ho_bio_pic.png
+
+
+# Local-only working files: originals, unused reference images, and
+# client-facing handoff PDFs. Moved out of the published public/ folder.
+_local/
+open_items_for_henry.pdf
+math_calculus_image.jpeg
+orca.jpeg

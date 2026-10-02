@@ -62,7 +62,7 @@ If you'd rather manage the domain and hosting in one place instead of splitting 
 
 ## Phase 5.5 — Set up email (required, not optional)
 
-The site already links to `henry@mathwithhenry.com` in the Contact section, so this has to exist before launch — it's not a nice-to-have. Neither Netlify nor Porkbun's Static Hosting includes an inbox; whichever hosting path you took above, email is always a separate piece.
+The site already links to `info@mathwithhenry.com` in the Contact section, so this has to exist before launch — it's not a nice-to-have. Neither Netlify nor Porkbun's Static Hosting includes an inbox; whichever hosting path you took above, email is always a separate piece.
 
 - **E1.** Pick a provider: **Zoho Mail** (free tier, custom-domain inbox) or **Google Workspace** (~$6/month, full Gmail interface). If you went the Porkbun bundle route, check Porkbun's own **Email Hosting** or **free Email Forwarding** first — keeping it under the same account may be simpler than adding a third vendor.
 - **E2.** Sign up and follow the provider's domain-verification flow — they'll hand you DNS records to add, typically an MX record (routes mail) and a TXT record (proves you own the domain).
