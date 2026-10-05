@@ -35,7 +35,7 @@ See `deployment-steps.md` for the full path to a live site — registering the d
 
 ## Status
 
-Live. Remaining items are tracked in `open-items.md` (local only): PayPal Business account conversion, Henry's verse-list preference, and more testimonials.
+Live. Remaining items are tracked in `open-items.md` (local only): Henry's verse-list preference, and more testimonials.
 
 ## License
 
