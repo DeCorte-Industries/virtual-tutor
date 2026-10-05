@@ -48,3 +48,6 @@ _local/
 open_items_for_henry.pdf
 math_calculus_image.jpeg
 orca.jpeg
+
+# Internal deployment guide — local only
+deployment-steps.md
