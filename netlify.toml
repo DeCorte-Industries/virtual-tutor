@@ -2,3 +2,9 @@
 # are never served from mathwithhenry.com.
 [build]
   publish = "public"
+
+# Long-lived caching for static images (filenames change if the image does).
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

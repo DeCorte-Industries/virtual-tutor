@@ -3,18 +3,90 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Math with Henry — Virtual Private Math Tutor</title>
+<title>Online Math Tutor: Algebra 1 to Calculus AB | Math with Henry</title>
+<meta name="description" content="Live one-on-one online math tutoring: Algebra 1, Geometry, Algebra 2, Precalculus and Calculus AB. 30+ years of experience. Free 10-minute intro call." />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#16302B" />
 <link rel="canonical" href="https://mathwithhenry.com/" />
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 <meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
 <meta property="og:site_name" content="Math with Henry" />
-<meta property="og:title" content="Math with Henry — Virtual Private Math Tutor" />
-<meta property="og:description" content="One-on-one virtual math tutoring from Algebra 1 through Calculus AB with Henry Oglesby." />
+<meta property="og:title" content="Online Math Tutor: Algebra 1 to Calculus AB | Math with Henry" />
+<meta property="og:description" content="Live one-on-one online math tutoring from Algebra 1 through Calculus AB with Henry Oglesby, a teacher with 30+ years of experience. Book a free intro call." />
 <meta property="og:url" content="https://mathwithhenry.com/" />
-<meta name="description" content="One-on-one virtual math tutoring from Algebra 1 through Calculus AB with Henry Oglesby." />
+<meta property="og:image" content="https://mathwithhenry.com/images/ho_bio_pic.jpg" />
+<meta property="og:image:alt" content="Henry Oglesby, virtual math tutor" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Online Math Tutor: Algebra 1 to Calculus AB | Math with Henry" />
+<meta name="twitter:description" content="Live one-on-one online math tutoring with Henry Oglesby, a teacher with 30+ years of experience." />
+<meta name="twitter:image" content="https://mathwithhenry.com/images/ho_bio_pic.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mathwithhenry.com/#website",
+      "url": "https://mathwithhenry.com/",
+      "name": "Math with Henry",
+      "publisher": { "@id": "https://mathwithhenry.com/#business" }
+    },
+    {
+      "@type": ["ProfessionalService", "EducationalOrganization"],
+      "@id": "https://mathwithhenry.com/#business",
+      "name": "Math with Henry",
+      "description": "Live one-on-one and small-group online math tutoring from Algebra 1 through Calculus AB.",
+      "url": "https://mathwithhenry.com/",
+      "image": "https://mathwithhenry.com/images/ho_bio_pic.jpg",
+      "email": "info@mathwithhenry.com",
+      "priceRange": "$40-$50 per hour",
+      "founder": { "@id": "https://mathwithhenry.com/#henry" },
+      "knowsAbout": ["Algebra 1", "Geometry", "Algebra 2", "Precalculus", "Calculus AB"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Online math tutoring",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "price": "50",
+            "priceCurrency": "USD",
+            "itemOffered": { "@type": "Service", "name": "One-on-one online math tutoring (per hour)", "serviceType": "Math tutoring" }
+          },
+          {
+            "@type": "Offer",
+            "price": "40",
+            "priceCurrency": "USD",
+            "itemOffered": { "@type": "Service", "name": "Small-group online math tutoring, up to 4 students (per student, per hour)", "serviceType": "Math tutoring" }
+          },
+          {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "itemOffered": { "@type": "Service", "name": "Free 10-minute intro call", "serviceType": "Consultation" }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://mathwithhenry.com/#henry",
+      "name": "Henry Oglesby",
+      "jobTitle": "Math Tutor",
+      "image": "https://mathwithhenry.com/images/ho_bio_pic.jpg",
+      "url": "https://mathwithhenry.com/#about",
+      "worksFor": { "@id": "https://mathwithhenry.com/#business" },
+      "alumniOf": [
+        { "@type": "CollegeOrUniversity", "name": "Barton College" },
+        { "@type": "CollegeOrUniversity", "name": "Georgia State University" }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
   :root{
     --chalk-bg:#16302B;
@@ -110,6 +182,8 @@
     cursor:pointer;
     transition:transform .15s ease, box-shadow .15s ease;
   }
+  button.btn,button.book-link{font-family:inherit;line-height:inherit;text-align:center;}
+  button.book-link{background:none;border:0;padding:0;cursor:pointer;}
   .btn:hover{transform:translateY(-2px);}
   .btn-primary{background:var(--coral);color:#fff;}
   .btn-primary:hover{box-shadow:0 10px 24px rgba(232,84,62,0.35);}
@@ -224,11 +298,11 @@
   .course-card .step{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--chalk-white-dim);margin-bottom:14px;display:block;}
   .course-card h3{font-size:1.25rem;margin-bottom:8px;}
   .course-card p{color:var(--chalk-white-dim);font-size:0.94rem;margin:0;}
-  .course-card a.book-link{
+  .course-card .book-link{
     display:inline-flex;align-items:center;gap:6px;margin-top:14px;
     font-size:0.88rem;font-weight:600;color:var(--gold);text-decoration:none;
   }
-  .course-card a.book-link:hover{text-decoration:underline;}
+  .course-card .book-link:hover{text-decoration:underline;}
 
   /* ---------- How it works ---------- */
   .steps{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
@@ -420,7 +494,7 @@
       <a href="#charities">Charities</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="javascript:void(0)" data-cal-namespace="oneHourNav" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary nav-cta">Book a session</a>
+    <button type="button" data-cal-namespace="oneHourNav" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary nav-cta" aria-haspopup="dialog">Book a session</button>
   </nav>
 </header>
 
@@ -430,10 +504,10 @@
     <div class="wrap hero-inner">
       <p class="mono eyebrow"><span class="dash"></span> Virtual Private Math Tutor</p>
       <h1>One tutor, one student, every step from <em>Algebra&nbsp;1</em> to <em>Calculus&nbsp;AB</em>.</h1>
-      <p class="lede">Henry Oglesby teaches live math sessions online — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
+      <p class="lede">Henry Oglesby is an online math tutor who teaches live sessions — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
       <div class="hero-ctas">
-        <a class="btn btn-teal" href="javascript:void(0)" data-cal-namespace="introCallHero" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book a free 10-minute intro call</a>
-        <a class="btn btn-primary" href="javascript:void(0)" data-cal-namespace="oneHourHero" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a 1-hour session</a>
+        <button type="button" class="btn btn-teal" data-cal-namespace="introCallHero" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a free 10-minute intro call</button>
+        <button type="button" class="btn btn-primary" data-cal-namespace="oneHourHero" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a 1-hour session</button>
       </div>
       <div class="ladder-row" aria-label="Subjects taught, in sequence">
         <span class="ladder-chip"><span class="dot" style="background:var(--coral)"></span>Algebra 1</span>
@@ -532,7 +606,7 @@
           <span class="step">1:1 sessions</span>
           <h3>$50 / hour</h3>
           <p>Choose a 1-hour or 2-hour session. Two-hour sessions run straight through — no breaks.</p>
-          <a class="book-link" href="javascript:void(0)" data-cal-namespace="oneHourRates" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}'>Book a session <span aria-hidden="true">→</span></a>
+          <button type="button" class="book-link" data-cal-namespace="oneHourRates" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a session <span aria-hidden="true">→</span></button>
         </div>
         <div class="course-card reveal">
           <span class="bar" style="background:var(--gold)"></span>
@@ -545,7 +619,7 @@
           <span class="step">First step</span>
           <h3>10-minute intro call</h3>
           <p>No charge — a short call to talk through what your student needs before booking a paid session.</p>
-          <a class="book-link" href="javascript:void(0)" data-cal-namespace="introCallRates" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}'>Book the intro call <span aria-hidden="true">→</span></a>
+          <button type="button" class="book-link" data-cal-namespace="introCallRates" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book the intro call <span aria-hidden="true">→</span></button>
         </div>
       </div>
       <div class="contact-grid" style="margin-top:40px;">
@@ -577,7 +651,7 @@
   <section id="about">
     <div class="wrap about">
       <div class="about-portrait reveal">
-        <img src="images/ho_bio_pic.jpg" alt="Henry Oglesby smiling, wearing a navy suit" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);" />
+        <img src="images/ho_bio_pic.jpg" width="716" height="1074" loading="lazy" decoding="async" alt="Henry Oglesby smiling, wearing a navy suit" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);" />
       </div>
       <div class="about-copy reveal">
         <span class="mono" style="color:var(--teal);display:block;margin-bottom:14px;">About Henry</span>
@@ -596,11 +670,11 @@
       <p class="mono" style="color:var(--gold);">Beyond the classroom</p>
       <div class="aside-gallery">
         <div class="aside-card reveal">
-          <img src="images/orca.jpg" alt="Two orcas breaching the ocean surface" loading="lazy" />
+          <img src="images/orca.jpg" width="1000" height="664" alt="Two orcas breaching the ocean surface" loading="lazy" decoding="async" />
           <p class="cap"><strong>Favorite animal:</strong> the orca.</p>
         </div>
         <div class="aside-card reveal">
-          <img class="fit-contain" src="images/sextant.jpg" alt="An antique brass sextant used for celestial navigation" loading="lazy" />
+          <img class="fit-contain" src="images/sextant.jpg" width="288" height="328" alt="An antique brass sextant used for celestial navigation" loading="lazy" decoding="async" />
           <p class="cap">A reminder that math has always charted the way — from celestial navigation to Calculus AB.</p>
         </div>
       </div>
@@ -665,6 +739,43 @@
 
   <hr class="divider" />
 
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">Common questions</span>
+        <h2>Online math tutoring, answered.</h2>
+      </div>
+      <div class="steps">
+        <div class="step-card reveal">
+          <h3>What math subjects do you tutor?</h3>
+          <p>Algebra 1, Geometry, Algebra 2, Precalculus, and Calculus AB, including AP exam pacing for Calculus AB.</p>
+        </div>
+        <div class="step-card reveal">
+          <h3>How much does online tutoring cost?</h3>
+          <p>One-on-one sessions are $50 per hour. Small groups of up to 4 students are $40 per student per hour. The 10-minute intro call is free.</p>
+        </div>
+        <div class="step-card reveal">
+          <h3>How do virtual sessions work?</h3>
+          <p>Every session is live over video on a shared digital whiteboard, worked step by step until the concept makes sense.</p>
+        </div>
+        <div class="step-card reveal">
+          <h3>Can my student join a group session?</h3>
+          <p>Yes. Groups are limited to 4 students so everyone still gets real attention.</p>
+        </div>
+        <div class="step-card reveal">
+          <h3>What is the cancellation policy?</h3>
+          <p>Give at least 48 hours' notice to reschedule. See <a href="#rates" style="color:var(--gold);">rates &amp; policy</a> for details.</p>
+        </div>
+        <div class="step-card reveal">
+          <h3>How do I get started?</h3>
+          <p>Book the free 10-minute intro call, or go straight to a 1-hour session. Pick a time online and you're set.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
   <section id="contact">
     <div class="wrap">
       <div class="section-head reveal">
@@ -677,8 +788,8 @@
           <h3>Book online</h3>
           <p>Choose whichever fits — a free intro call to talk it through first, or go straight into a paid session.</p>
           <div class="contact-actions">
-            <a href="javascript:void(0)" data-cal-namespace="oneHourContact" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary">Book a 1-hour tutoring session <span aria-hidden="true">→</span></a>
-            <a href="javascript:void(0)" data-cal-namespace="introCallContact" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal">Book a free 10-minute intro call <span aria-hidden="true">→</span></a>
+            <button type="button" data-cal-namespace="oneHourContact" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary" aria-haspopup="dialog">Book a 1-hour tutoring session <span aria-hidden="true">→</span></button>
+            <button type="button" data-cal-namespace="introCallContact" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal" aria-haspopup="dialog">Book a free 10-minute intro call <span aria-hidden="true">→</span></button>
             <a href="mailto:info@mathwithhenry.com" class="btn btn-ghost">General questions? Email info@mathwithhenry.com <span aria-hidden="true">→</span></a>
           </div>
           <p class="form-note" style="margin-top:16px;">Payment is due upfront via Zelle — see <a href="#rates">rates &amp; policy</a> for full details.</p>
@@ -703,9 +814,9 @@
   // ---------- Cal.com booking embed ----------
   // Loads Cal.com's embed.js so booking links open as an in-page popup
   // instead of navigating to a new tab or to cal.com directly. See the
-  // click-binding block below (after the Cal("init", ...) calls) for why
-  // every booking link's href is "javascript:void(0)" instead of a real
-  // cal.com URL, and how the popup gets triggered explicitly.
+  // click-binding block below for why booking controls are <button>s with no
+  // real cal.com URL, and how the popup gets triggered explicitly. embed.js
+  // itself is only fetched once ensureCal() runs (see below).
   (function (C, A, L) {
     let p = function (a, ar) { a.q.push(ar); };
     let d = C.document;
@@ -749,23 +860,43 @@
     "oneHourContact",
     "introCallContact",
   ];
-  CAL_NAMESPACES.forEach(function (ns) {
-    Cal("init", ns, { origin: "https://cal.com" });
-    Cal.ns[ns]("ui", { theme: "dark", layout: "month_view" });
+
+  // Cal's embed.js is injected by the first Cal(...) call, so nothing is
+  // downloaded until ensureCal() runs. It runs (once) on the first sign a
+  // visitor is heading for a booking link — hover, touch or keyboard focus —
+  // on the click itself if that comes first, or a few seconds after the page
+  // has loaded, whichever happens first. This keeps a third-party script out
+  // of the initial page load without changing how the popup behaves.
+  let calReady = false;
+  function ensureCal() {
+    if (calReady) return;
+    calReady = true;
+    CAL_NAMESPACES.forEach(function (ns) {
+      Cal("init", ns, { origin: "https://cal.com" });
+      Cal.ns[ns]("ui", { theme: "dark", layout: "month_view" });
+    });
+  }
+  ["pointerover", "touchstart", "focusin"].forEach(function (evt) {
+    document.addEventListener(evt, function (e) {
+      if (e.target && e.target.closest && e.target.closest("[data-cal-link]")) ensureCal();
+    }, { passive: true });
+  });
+  window.addEventListener("load", function () {
+    setTimeout(ensureCal, 3000);
   });
 
   // Cal.com's automatic data-cal-link click-binding only attaches once
   // embed.js finishes its own network fetch, which can lose the race
   // against a real click on a real https://cal.com href — the browser
   // just follows the link and leaves the page. To make the popup reliable
-  // on the very first click, every booking link below has its href set to
-  // "javascript:void(0)" (no real destination to fall through to) and this
-  // listener calls the modal instruction directly. Cal("init", ...) above
-  // safely queues that call even before embed.js has loaded, so there's
-  // no race condition — the popup always opens instead of navigating away.
+  // on the very first click, every booking control is a <button> (no href to
+  // navigate to) and this listener calls the modal instruction directly. Cal("init", ...) safely
+  // queues that call even before embed.js has loaded, so there's no race
+  // condition — the popup always opens instead of navigating away.
   document.querySelectorAll("[data-cal-link]").forEach(function (el) {
     el.addEventListener("click", function (e) {
       e.preventDefault();
+      ensureCal();
       const ns = el.getAttribute("data-cal-namespace");
       const calLink = el.getAttribute("data-cal-link");
       let config = {};
