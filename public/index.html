@@ -195,12 +195,13 @@
     padding:10px 0;
   }
   .verse-banner-inner{
-    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+    text-align:center;
   }
   .verse-label{color:var(--gold);flex-shrink:0;}
   .verse-text{
     margin:0;font-size:0.92rem;color:var(--chalk-white-dim);
-    font-style:italic;flex:1;min-width:200px;
+    font-style:italic;flex:0 1 auto;
   }
   .verse-ref{
     font-style:normal;color:var(--chalk-white);opacity:0.85;font-size:0.85rem;
@@ -271,6 +272,12 @@
 
   /* ---------- Subjects (ladder cards) ---------- */
   .ladder{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  @media(min-width:900px){
+    .ladder{grid-template-columns:repeat(6,1fr);}
+    .ladder .course-card{grid-column:span 2;}
+    .ladder .course-card:nth-child(4){grid-column:2 / span 2;}
+    .ladder .course-card:nth-child(5){grid-column:4 / span 2;}
+  }
   .course-card{
     background:var(--chalk-bg-2);
     border:1px solid var(--line);
@@ -292,6 +299,24 @@
   .course-card .book-link:hover{text-decoration:underline;}
 
   /* ---------- How it works ---------- */
+  .faq-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:start;}
+  .faq-card{
+    background:var(--chalk-bg-2);border:1px solid var(--line);border-radius:var(--radius);
+    transition:border-color .18s ease;
+  }
+  .faq-card:hover,.faq-card[open]{border-color:rgba(245,241,232,0.3);}
+  .faq-card summary{
+    list-style:none;cursor:pointer;padding:20px 52px 20px 22px;position:relative;
+    font-family:'Fraunces',serif;font-size:1.1rem;line-height:1.3;color:var(--chalk-white);
+  }
+  .faq-card summary::-webkit-details-marker{display:none;}
+  .faq-card summary::after{
+    content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);
+    font-family:'Inter',sans-serif;font-size:1.5rem;color:var(--gold);line-height:1;
+  }
+  .faq-card[open] summary::after{content:"\2212";}
+  .faq-card summary:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;border-radius:var(--radius);}
+  .faq-card p{margin:0;padding:0 22px 20px;color:var(--chalk-white-dim);font-size:0.96rem;}
   .steps{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
   .step-card{padding-left:0;}
   .step-num{
@@ -356,7 +381,7 @@
     overflow:hidden;transition:transform .18s ease, border-color .18s ease;
   }
   .aside-card:hover{transform:translateY(-4px);border-color:rgba(245,241,232,0.3);}
-  .aside-card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--chalk-bg);}
+  .aside-card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--chalk-bg);}
   .aside-card img.fit-contain{object-fit:contain;padding:18px;box-sizing:border-box;}
   .aside-card .cap{padding:16px 18px;font-size:0.9rem;color:var(--chalk-white-dim);margin:0;}
   .aside-card .cap strong{color:var(--chalk-white);}
@@ -479,14 +504,14 @@
 
 <header>
   <nav class="nav">
-    <a href="#top" class="brand" aria-label="Henry, home">
+    <a href="#top" class="brand" aria-label="Math with Henry, home">
       <span class="marks" aria-hidden="true">
         <span style="background:var(--coral)"></span>
         <span style="background:var(--gold)"></span>
         <span style="background:var(--teal)"></span>
         <span style="background:var(--periwinkle)"></span>
       </span>
-      Henry
+      Math with Henry
     </a>
     <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
     <div class="nav-links" id="navLinks">
@@ -776,31 +801,31 @@
         <span class="mono">Common questions</span>
         <h2>Online math tutoring, answered.</h2>
       </div>
-      <div class="steps">
-        <div class="step-card reveal">
-          <h3>What math subjects do you tutor?</h3>
+      <div class="faq-grid">
+        <details class="faq-card reveal">
+          <summary>What math subjects do you tutor?</summary>
           <p>Algebra 1, Geometry, Algebra 2, Precalculus, and Calculus AB, including AP exam pacing for Calculus AB.</p>
-        </div>
-        <div class="step-card reveal">
-          <h3>How much does online tutoring cost?</h3>
+        </details>
+        <details class="faq-card reveal">
+          <summary>How much does online tutoring cost?</summary>
           <p>One-on-one sessions are $50 per hour. Small groups of up to 4 students are $40 per student per hour. The 10-minute intro call is free.</p>
-        </div>
-        <div class="step-card reveal">
-          <h3>How do virtual sessions work?</h3>
+        </details>
+        <details class="faq-card reveal">
+          <summary>How do virtual sessions work?</summary>
           <p>Every session is live over video on a shared digital whiteboard, worked step by step until the concept makes sense.</p>
-        </div>
-        <div class="step-card reveal">
-          <h3>Can my student join a group session?</h3>
+        </details>
+        <details class="faq-card reveal">
+          <summary>Can my student join a group session?</summary>
           <p>Yes. Groups are limited to 4 students so everyone still gets real attention.</p>
-        </div>
-        <div class="step-card reveal">
-          <h3>What is the cancellation policy?</h3>
+        </details>
+        <details class="faq-card reveal">
+          <summary>What is the cancellation policy?</summary>
           <p>Give at least 48 hours' notice to reschedule. See <a href="#rates" style="color:var(--gold);">rates &amp; policy</a> for details.</p>
-        </div>
-        <div class="step-card reveal">
-          <h3>How do I get started?</h3>
+        </details>
+        <details class="faq-card reveal">
+          <summary>How do I get started?</summary>
           <p>Book the free 10-minute intro call, or go straight to a 1-hour session. Pick a time online and you're set.</p>
-        </div>
+        </details>
       </div>
     </div>
   </section>
