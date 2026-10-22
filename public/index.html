@@ -13,14 +13,11 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:site_name" content="Math with Henry" />
 <meta property="og:title" content="Online Math Tutor: Algebra 1 to Calculus AB | Math with Henry" />
-<meta property="og:description" content="Live one-on-one online math tutoring from Algebra 1 through Calculus AB with Henry Oglesby, a teacher with 30+ years of experience. Book a free intro call." />
+<meta property="og:description" content="Live one-on-one online math tutoring from Algebra 1 through Calculus AB with Henry, a teacher with 30+ years of experience and a one-time Teacher of the Year. Book a free intro call." />
 <meta property="og:url" content="https://mathwithhenry.com/" />
-<meta property="og:image" content="https://mathwithhenry.com/images/ho_bio_pic.jpg" />
-<meta property="og:image:alt" content="Henry Oglesby, virtual math tutor" />
-<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Online Math Tutor: Algebra 1 to Calculus AB | Math with Henry" />
-<meta name="twitter:description" content="Live one-on-one online math tutoring with Henry Oglesby, a teacher with 30+ years of experience." />
-<meta name="twitter:image" content="https://mathwithhenry.com/images/ho_bio_pic.jpg" />
+<meta name="twitter:description" content="Live one-on-one online math tutoring with Henry, a teacher with 30+ years of experience." />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,7 +35,6 @@
       "name": "Math with Henry",
       "description": "Live one-on-one and small-group online math tutoring from Algebra 1 through Calculus AB.",
       "url": "https://mathwithhenry.com/",
-      "image": "https://mathwithhenry.com/images/ho_bio_pic.jpg",
       "email": "info@mathwithhenry.com",
       "priceRange": "$40-$50 per hour",
       "founder": { "@id": "https://mathwithhenry.com/#henry" },
@@ -71,9 +67,9 @@
     {
       "@type": "Person",
       "@id": "https://mathwithhenry.com/#henry",
-      "name": "Henry Oglesby",
+      "name": "Henry",
       "jobTitle": "Math Tutor",
-      "image": "https://mathwithhenry.com/images/ho_bio_pic.jpg",
+      "award": "Teacher of the Year",
       "url": "https://mathwithhenry.com/#about",
       "worksFor": { "@id": "https://mathwithhenry.com/#business" },
       "alumniOf": [
@@ -198,10 +194,8 @@
     border-bottom:1px solid var(--line);
     padding:10px 0;
   }
-  .verse-banner.hidden{display:none;}
   .verse-banner-inner{
     display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-    position:relative;padding-right:36px;
   }
   .verse-label{color:var(--gold);flex-shrink:0;}
   .verse-text{
@@ -212,13 +206,6 @@
     font-style:normal;color:var(--chalk-white);opacity:0.85;font-size:0.85rem;
     margin-left:6px;white-space:nowrap;
   }
-  .verse-dismiss{
-    position:absolute;right:0;top:50%;transform:translateY(-50%);
-    background:none;border:none;color:var(--chalk-white-dim);
-    font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 8px;
-  }
-  .verse-dismiss:hover{color:var(--chalk-white);}
-
   .nav-cta{display:none;}
   @media(min-width:860px){.nav-cta{display:inline-flex;}}
   .menu-toggle{display:inline-flex;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--chalk-white);}
@@ -321,23 +308,40 @@
     align-items:center;
   }
   @media(min-width:800px){.about{grid-template-columns:0.9fr 1.1fr;}}
-  .about-portrait{
-    aspect-ratio:4/5;
+  .about-creds{
     border-radius:var(--radius);
     background:
-      linear-gradient(160deg, rgba(232,84,62,0.25), rgba(63,191,181,0.2)),
+      linear-gradient(160deg, rgba(232,84,62,0.18), rgba(63,191,181,0.14)),
       var(--chalk-bg-2);
     border:1px solid var(--line);
-    display:flex;align-items:center;justify-content:center;
-    position:relative;
+    padding:32px 28px;
   }
-  .about-portrait .initials{
-    font-family:'Fraunces',serif;font-size:5rem;color:var(--chalk-white);opacity:0.85;
+  .about-creds .award{
+    font-family:'Fraunces',serif;font-size:1.7rem;line-height:1.2;
+    color:var(--chalk-white);margin:0 0 6px;
   }
-  .about-portrait .tag{
-    position:absolute;bottom:18px;left:18px;right:18px;
-    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--chalk-white-dim);
+  .about-creds .award-sub{color:var(--gold);margin:0 0 24px;}
+  .about-creds ul{list-style:none;margin:0;padding:0;display:grid;gap:14px;}
+  .about-creds li{
+    padding-left:22px;position:relative;color:var(--chalk-white-dim);font-size:0.98rem;
   }
+  .about-creds li::before{
+    content:"";position:absolute;left:0;top:0.55em;width:8px;height:8px;
+    border-radius:50%;background:var(--teal);
+  }
+  .about-faith{
+    border-left:3px solid var(--gold);padding-left:16px;
+    color:var(--chalk-white);font-style:italic;
+  }
+
+  /* ---------- Notes from Henry ---------- */
+  .notes-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+  .note-card{
+    background:var(--chalk-bg-2);border:1px solid var(--line);
+    border-radius:var(--radius);padding:24px;
+  }
+  .note-card h3{margin:0 0 10px;font-size:1.15rem;}
+  .note-card p{margin:0;color:var(--chalk-white-dim);white-space:pre-line;overflow-wrap:anywhere;}
   .about-copy p{color:var(--chalk-white-dim);font-size:1.02rem;margin:0 0 16px;}
   .about-facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;}
   .fact{
@@ -468,7 +472,6 @@
   <div class="wrap verse-banner-inner">
     <span class="mono verse-label">Verse of the Day</span>
     <p class="verse-text" id="verseLine">Loading…</p>
-    <button id="verseDismiss" class="verse-dismiss" aria-label="Dismiss verse of the day">&times;</button>
   </div>
 </div>
 
@@ -476,14 +479,14 @@
 
 <header>
   <nav class="nav">
-    <a href="#top" class="brand" aria-label="Henry Oglesby, home">
+    <a href="#top" class="brand" aria-label="Henry, home">
       <span class="marks" aria-hidden="true">
         <span style="background:var(--coral)"></span>
         <span style="background:var(--gold)"></span>
         <span style="background:var(--teal)"></span>
         <span style="background:var(--periwinkle)"></span>
       </span>
-      Henry Oglesby
+      Henry
     </a>
     <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
     <div class="nav-links" id="navLinks">
@@ -504,7 +507,7 @@
     <div class="wrap hero-inner">
       <p class="mono eyebrow"><span class="dash"></span> Virtual Private Math Tutor</p>
       <h1>One tutor, one student, every step from <em>Algebra&nbsp;1</em> to <em>Calculus&nbsp;AB</em>.</h1>
-      <p class="lede">Henry Oglesby is an online math tutor who teaches live sessions — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
+      <p class="lede">Henry is an online math tutor who teaches live sessions — one-on-one, or in small groups of up to 4 — paced to how your student actually learns, not a fixed script.</p>
       <div class="hero-ctas">
         <button type="button" class="btn btn-teal" data-cal-namespace="introCallHero" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a free 10-minute intro call</button>
         <button type="button" class="btn btn-primary" data-cal-namespace="oneHourHero" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a 1-hour session</button>
@@ -650,13 +653,22 @@
 
   <section id="about">
     <div class="wrap about">
-      <div class="about-portrait reveal">
-        <img src="images/ho_bio_pic.jpg" width="716" height="1074" loading="lazy" decoding="async" alt="Henry Oglesby smiling, wearing a navy suit" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);" />
+      <div class="about-creds reveal">
+        <p class="award">Teacher of the Year</p>
+        <p class="mono award-sub">An honor earned in the classroom</p>
+        <ul>
+          <li>30+ years teaching math in public and private secondary schools</li>
+          <li>Morning, summer, and night school experience</li>
+          <li>Experienced with digital learning platforms and virtual classrooms</li>
+          <li>BS in Mathematics, Barton College &middot; 7&ndash;12 mathematics certification</li>
+          <li>Master's in Mathematics Education, Georgia State University</li>
+        </ul>
       </div>
       <div class="about-copy reveal">
         <span class="mono" style="color:var(--teal);display:block;margin-bottom:14px;">About Henry</span>
         <h2 style="margin-bottom:18px;font-size:clamp(1.6rem,3vw,2.2rem);">Math clicks when someone slows down long enough to explain it right.</h2>
-        <p>Henry has spent over 30 years teaching and tutoring math — in morning school, summer school, evening school, and virtual classrooms. He holds a BS in Mathematics from Barton College, a 7–12 mathematics teaching certification, and a Master's in Mathematics Education from Georgia State University, with additional coursework at Georgia Tech and UGA. Now a retired teacher, he tutors as often as he can.</p>
+        <p>Henry has spent over 30 years teaching math in public and private secondary schools, in morning school, summer school, night school, and on digital learning platforms, and was once named Teacher of the Year. He holds a BS in Mathematics from Barton College, a 7–12 mathematics teaching certification, and a Master's in Mathematics Education from Georgia State University, with additional coursework at Georgia Tech and UGA. Now a retired teacher, he tutors as often as he can.</p>
+        <p class="about-faith">Behind every lesson is solid math and a Jesus-loving heart — Henry teaches with both.</p>
         <p>Every session starts with work that actually mirrors the homework or test being given, and works backward from there on a shared digital whiteboard, until the concept holds on its own.</p>
         <div class="about-facts">
           <span class="fact">30+ years teaching &amp; tutoring</span>
@@ -676,6 +688,25 @@
         <div class="aside-card reveal">
           <img class="fit-contain" src="images/sextant.jpg" width="288" height="328" alt="An antique brass sextant used for celestial navigation" loading="lazy" decoding="async" />
           <p class="cap">A reminder that math has always charted the way — from celestial navigation to Calculus AB.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="notes" hidden>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="mono">From Henry</span>
+        <h2>A note from Henry.</h2>
+      </div>
+      <div class="notes-grid">
+        <div class="note-card" id="mathNoteCard" hidden>
+          <h3>Math</h3>
+          <p id="mathNote"></p>
+        </div>
+        <div class="note-card" id="otherNoteCard" hidden>
+          <h3>Other topics</h3>
+          <p id="otherNote"></p>
         </div>
       </div>
     </div>
@@ -802,7 +833,7 @@
 
 <footer>
   <div class="wrap footer-row">
-    <p>© 2026 Henry Oglesby · Virtual Private Math Tutor</p>
+    <p>© 2026 Math with Henry · Virtual Private Math Tutor</p>
     <p><a href="mailto:info@mathwithhenry.com">info@mathwithhenry.com</a></p>
   </div>
   <div class="wrap">
@@ -1008,33 +1039,42 @@
     return Math.floor((date - start) / 86400000);
   }
 
-  function initVerseBanner() {
-    const banner = document.getElementById('verseBanner');
+  function showVerse(text, refText) {
     const line = document.getElementById('verseLine');
-    const dismiss = document.getElementById('verseDismiss');
-    if (!banner || !line || !dismiss) return;
-
-    const todayKey = new Date().toISOString().slice(0, 10);
-    let dismissedOn = null;
-    try { dismissedOn = localStorage.getItem('verseDismissedOn'); } catch (err) {}
-    if (dismissedOn === todayKey) {
-      banner.classList.add('hidden');
-      return;
+    line.textContent = '"' + text + '"';
+    if (refText) {
+      const ref = document.createElement('span');
+      ref.className = 'verse-ref';
+      ref.textContent = '— ' + refText;
+      line.appendChild(ref);
     }
-
-    const verse = VERSES[dayOfYear(new Date()) % VERSES.length];
-    line.textContent = '"' + verse.text + '"';
-    const ref = document.createElement('span');
-    ref.className = 'verse-ref';
-    ref.textContent = '— ' + verse.ref;
-    line.appendChild(ref);
-
-    dismiss.addEventListener('click', () => {
-      banner.classList.add('hidden');
-      try { localStorage.setItem('verseDismissedOn', todayKey); } catch (err) {}
-    });
   }
-  initVerseBanner();
+
+  function showNote(id, text) {
+    if (!text) return false;
+    document.getElementById(id).textContent = text;
+    document.getElementById(id + 'Card').hidden = false;
+    return true;
+  }
+
+  // Henry's verse and notes come from /api/content (edited at /admin/).
+  // If none is set, or the request fails, fall back to the built-in rotation.
+  async function initDynamicContent() {
+    const fallback = VERSES[dayOfYear(new Date()) % VERSES.length];
+    let data = {};
+    try {
+      const res = await fetch('/api/content', { headers: { Accept: 'application/json' } });
+      if (res.ok) data = await res.json();
+    } catch (err) {}
+
+    if (data.verse && data.verse.text) showVerse(data.verse.text, data.verse.ref);
+    else showVerse(fallback.text, fallback.ref);
+
+    const hasMath = showNote('mathNote', data.mathNote);
+    const hasOther = showNote('otherNote', data.otherNote);
+    if (hasMath || hasOther) document.getElementById('notes').hidden = false;
+  }
+  initDynamicContent();
 
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
