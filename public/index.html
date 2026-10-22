@@ -153,7 +153,7 @@
   }
   .nav{
     display:flex;align-items:center;justify-content:space-between;
-    padding:16px 28px;
+    padding:16px 28px;gap:32px;
     max-width:1120px;margin:0 auto;
   }
   .brand{
@@ -162,7 +162,7 @@
   }
   .brand .marks{display:flex;gap:2px;}
   .brand .marks span{width:4px;height:18px;border-radius:2px;}
-  .nav-links{display:flex;gap:22px;align-items:center;}
+  .nav-links{display:flex;gap:26px;align-items:center;}
   .nav-links a{
     font-size:0.92rem;text-decoration:none;color:var(--chalk-white-dim);white-space:nowrap;
     transition:color .15s ease;
@@ -208,10 +208,10 @@
     margin-left:6px;white-space:nowrap;
   }
   .nav-cta{display:none;}
-  @media(min-width:1180px){.nav-cta{display:inline-flex;}}
+  @media(min-width:1000px){.nav-cta{display:inline-flex;}}
   .menu-toggle{display:inline-flex;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--chalk-white);}
-  @media(min-width:1180px){.menu-toggle{display:none;} .nav-links{display:flex;}}
-  @media(max-width:1179px){
+  @media(min-width:1000px){.menu-toggle{display:none;} .nav-links{display:flex;}}
+  @media(max-width:999px){
     .nav-links{
       position:absolute;top:100%;left:0;right:0;
       background:var(--chalk-bg-2);
@@ -523,11 +523,9 @@
     <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
     <div class="nav-links" id="navLinks">
       <a href="#subjects">Subjects</a>
-      <a href="#how">How it works</a>
       <a href="#rates">Rates</a>
       <a href="#about">About</a>
-      <a href="#charities">Charities</a>
-      <a href="#testimonials">Testimonials</a>
+      <a href="#testimonials">Reviews</a>
       <a href="#faq">Common Questions</a>
       <a href="#contact">Contact</a>
     </div>
@@ -867,7 +865,7 @@
 <footer>
   <div class="wrap footer-row">
     <p>© 2026 Math with Henry · Virtual Private Math Tutor</p>
-    <p><a href="mailto:info@mathwithhenry.com">info@mathwithhenry.com</a></p>
+    <p><a href="#charities">Charities Henry supports</a> &nbsp;·&nbsp; <a href="mailto:info@mathwithhenry.com">info@mathwithhenry.com</a></p>
   </div>
   <div class="wrap">
     <p class="footer-credit mono">Site created by <a href="https://decorteindustries.com" target="_blank" rel="noopener noreferrer">DeCorte Industries</a></p>
