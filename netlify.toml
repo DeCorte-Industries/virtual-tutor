@@ -2,3 +2,21 @@
 # are never served from mathwithhenry.com.
 [build]
   publish = "public"
+
+# Long-lived caching for static images (filenames change if the image does).
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Serverless functions: /api/content (public read) and /api/admin (password-protected write).
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Never cache or index the admin page.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    Cache-Control = "no-store"
+    X-Robots-Tag = "noindex, nofollow"

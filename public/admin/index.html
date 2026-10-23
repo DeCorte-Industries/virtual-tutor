@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Site Editor | Math with Henry</title>
+<style>
+  :root{--bg:#16302B;--bg2:#1D3D36;--text:#F5F1E8;--dim:#C9D3CC;--gold:#E8A93B;--teal:#3FBFB5;--coral:#E8543E;--line:rgba(245,241,232,0.14);}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,sans-serif;padding:32px 16px;}
+  main{max-width:640px;margin:0 auto;}
+  h1{font-size:1.6rem;margin:0 0 4px;}
+  h2{font-size:1.1rem;margin:0 0 4px;}
+  p.sub{color:var(--dim);margin:0 0 24px;}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px;}
+  label{display:block;font-weight:600;margin:14px 0 6px;}
+  .hint{color:var(--dim);font-size:0.88rem;margin:0 0 6px;}
+  input,textarea{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;}
+  textarea{min-height:110px;resize:vertical;}
+  button{margin-top:16px;padding:12px 22px;border:0;border-radius:10px;background:var(--gold);color:#16302B;font:inherit;font-weight:600;cursor:pointer;}
+  button.link{background:none;color:var(--dim);text-decoration:underline;padding:0;margin:0;font-weight:400;}
+  button:disabled{opacity:0.6;cursor:wait;}
+  .msg{margin-top:12px;min-height:1.4em;}
+  .msg.ok{color:var(--teal);} .msg.err{color:var(--coral);}
+  .count{float:right;color:var(--dim);font-size:0.82rem;font-weight:400;}
+  [hidden]{display:none !important;}
+</style>
+</head>
+<body>
+<main>
+  <section id="loginView" class="card">
+    <h1>Site editor</h1>
+    <p class="sub">Sign in to update the verse of the day and your notes.</p>
+    <form id="loginForm">
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required />
+      <button type="submit">Sign in</button>
+      <p class="msg" id="loginMsg" role="alert"></p>
+    </form>
+  </section>
+
+  <div id="editorView" hidden>
+    <h1>Site editor</h1>
+    <p class="sub">Changes appear on mathwithhenry.com as soon as you save. <button type="button" class="link" id="signOut">Sign out</button></p>
+    <form id="editorForm">
+      <div class="card">
+        <h2>Verse of the day</h2>
+        <p class="hint">Stays up until you change it. Leave the verse empty to go back to the automatic rotating verses.</p>
+        <label for="verseText">Verse <span class="count" data-for="verseText" data-max="600"></span></label>
+        <textarea id="verseText" maxlength="600"></textarea>
+        <label for="verseRef">Reference (for example, Psalm 23:1)</label>
+        <input id="verseRef" maxlength="80" />
+      </div>
+      <div class="card">
+        <h2>Math note</h2>
+        <p class="hint">Shown to visitors in the "Math" box. Leave empty to hide the box.</p>
+        <label for="mathNote" class="sr">Math note <span class="count" data-for="mathNote" data-max="1500"></span></label>
+        <textarea id="mathNote" maxlength="1500"></textarea>
+      </div>
+      <div class="card">
+        <h2>Other topics note</h2>
+        <p class="hint">Shown to visitors in the "Other topics" box. Leave empty to hide the box.</p>
+        <label for="otherNote" class="sr">Other topics note <span class="count" data-for="otherNote" data-max="1500"></span></label>
+        <textarea id="otherNote" maxlength="1500"></textarea>
+      </div>
+      <button type="submit" id="saveBtn">Save changes</button>
+      <p class="msg" id="saveMsg" role="status"></p>
+    </form>
+  </div>
+</main>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  let password = null;
+  try { password = sessionStorage.getItem('adminPw'); } catch (e) {}
+
+  async function api(payload) {
+    const res = await fetch('/api/admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({ password }, payload)),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw Object.assign(new Error(data.error || 'Something went wrong'), { status: res.status });
+    return data;
+  }
+
+  function updateCounts() {
+    document.querySelectorAll('.count').forEach((el) => {
+      const len = $(el.dataset.for).value.length;
+      el.textContent = len + ' / ' + el.dataset.max;
+    });
+  }
+
+  function showEditor(content) {
+    $('loginView').hidden = true;
+    $('editorView').hidden = false;
+    $('verseText').value = (content.verse && content.verse.text) || '';
+    $('verseRef').value = (content.verse && content.verse.ref) || '';
+    $('mathNote').value = content.mathNote || '';
+    $('otherNote').value = content.otherNote || '';
+    updateCounts();
+  }
+
+  function showLogin() {
+    password = null;
+    try { sessionStorage.removeItem('adminPw'); } catch (e) {}
+    $('editorView').hidden = true;
+    $('loginView').hidden = false;
+  }
+
+  $('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = $('loginMsg');
+    msg.className = 'msg'; msg.textContent = 'Signing in…';
+    password = $('password').value;
+    try {
+      const data = await api({ action: 'login' });
+      try { sessionStorage.setItem('adminPw', password); } catch (err) {}
+      $('password').value = '';
+      msg.textContent = '';
+      showEditor(data.content);
+    } catch (err) {
+      password = null;
+      msg.className = 'msg err';
+      msg.textContent = err.status === 401 ? 'That password is not correct.' : err.message;
+    }
+  });
+
+  $('editorForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('saveBtn'), msg = $('saveMsg');
+    btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Saving…';
+    try {
+      await api({
+        action: 'save',
+        verseText: $('verseText').value, verseRef: $('verseRef').value,
+        mathNote: $('mathNote').value, otherNote: $('otherNote').value,
+      });
+      msg.className = 'msg ok'; msg.textContent = 'Saved. Your changes are live.';
+    } catch (err) {
+      if (err.status === 401) { showLogin(); return; }
+      msg.className = 'msg err'; msg.textContent = 'Could not save: ' + err.message;
+    } finally { btn.disabled = false; }
+  });
+
+  $('signOut').addEventListener('click', showLogin);
+  document.querySelectorAll('textarea').forEach((t) => t.addEventListener('input', updateCounts));
+
+  if (password) {
+    api({ action: 'load' }).then((d) => showEditor(d.content)).catch(showLogin);
+  }
+})();
+</script>
+</body>
+</html>

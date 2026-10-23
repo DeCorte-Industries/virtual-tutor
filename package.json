@@ -1,0 +1,9 @@
+{
+  "name": "math-with-henry",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static site for mathwithhenry.com with a small Netlify Functions backend for owner-edited content.",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
