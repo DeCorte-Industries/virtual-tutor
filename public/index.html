@@ -134,15 +134,12 @@
   /* ---------- Verse banner ---------- */
   .verse-banner{background:var(--ink);padding:10px 0;}
   .verse-banner-inner{display:flex;align-items:baseline;justify-content:center;gap:14px;flex-wrap:wrap;text-align:center;}
-  .verse-label{
-    font-family:var(--display);font-size:0.78rem;letter-spacing:0.04em;text-transform:uppercase;
-    color:var(--yellow);flex-shrink:0;
-  }
+  .verse-text::before{content:"Verse of the Day: ";font-style:normal;font-weight:700;color:var(--yellow);}
   .verse-text{font-size:0.95rem;font-style:italic;color:#E8E8E4;flex:0 1 auto;}
   .verse-ref{font-style:normal;color:#fff;font-size:0.88rem;margin-left:6px;white-space:nowrap;}
 
   /* ---------- Spine: the four Euclid colors ---------- */
-  .spine-strip{display:flex;height:10px;width:100%;}
+  .spine-strip{display:flex;height:13px;width:100%;border-top:3px solid var(--paper);}
   .spine-strip span{flex:1;}
   .spine-strip .c1{background:var(--red);}
   .spine-strip .c2{background:var(--yellow);}
@@ -211,7 +208,7 @@
   .proof{margin:0;}
   .proof svg{width:100%;height:auto;display:block;overflow:visible;}
   .proof figcaption{margin-top:12px;text-align:center;font-family:var(--display);font-size:1.25rem;color:#fff;}
-  .js .js .proof .shape{transform-box:fill-box;transform-origin:center;animation:place .7s cubic-bezier(.16,1,.3,1) both;}
+  .js .proof .shape{transform-box:fill-box;transform-origin:center;animation:place .7s cubic-bezier(.16,1,.3,1) both;}
   .proof .s1{animation-delay:.15s;}
   .proof .s2{animation-delay:.35s;}
   .proof .s3{animation-delay:.55s;}
@@ -240,8 +237,8 @@
   .c-blue{background:var(--blue);color:#fff;}
   .c-ink{background:var(--ink);color:#fff;}
   .c-paper{background:var(--paper);color:var(--ink);}
-  .js .js .ladder .course-card{animation:rise .7s cubic-bezier(.16,1,.3,1) both;animation-play-state:paused;}
-  .js .js .ladder.in .course-card{animation-play-state:running;}
+  .js .ladder .course-card{animation:rise .7s cubic-bezier(.16,1,.3,1) both;animation-play-state:paused;}
+  .js .ladder.in .course-card{animation-play-state:running;}
   .ladder .course-card:nth-child(2){animation-delay:.08s;}
   .ladder .course-card:nth-child(3){animation-delay:.16s;}
   .ladder .course-card:nth-child(4){animation-delay:.24s;}
@@ -302,6 +299,10 @@
   .about-facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
   .fact{padding:8px 14px;border:2px solid var(--ink);font-weight:600;font-size:0.92rem;}
 
+  .plate{margin:28px 0 0;max-width:340px;}
+  .plate figcaption{font-size:0.9rem;font-style:italic;margin-top:6px;}
+  .qed{font-family:var(--display);font-size:1.6rem;text-align:right;margin-top:32px;}
+  .qed-mark{display:inline-block;width:0.6em;height:0.6em;background:var(--ink);margin-left:0.2em;}
   .aside-title{font-family:var(--display);font-weight:400;font-size:1.6rem;margin-top:88px;}
   .aside-gallery{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:28px;}
   .aside-card{border:var(--rule);background:var(--paper);}
@@ -323,6 +324,7 @@
   .charity-logo-text span{font-family:var(--display);font-size:1rem;text-align:center;line-height:1.2;}
   .charity-card h3{font-size:1.15rem;}
   .charity-card p{font-size:0.98rem;flex:1;}
+  .arr{flex-shrink:0;}
   .charity-card a{font-weight:700;text-decoration-thickness:3px;text-decoration-color:var(--red);text-underline-offset:5px;}
 
   /* ---------- Testimonial ---------- */
@@ -363,6 +365,11 @@
   input,textarea{width:100%;padding:12px 14px;border:var(--rule);border-radius:0;background:#fff;color:var(--ink);font:inherit;}
   textarea{resize:vertical;min-height:110px;}
 
+  .book-bar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 16px;background:var(--paper);border-top:var(--rule);}
+  .book-bar .btn{width:100%;justify-content:center;}
+  @media(min-width:1000px){.book-bar{display:none;}}
+  @media(max-width:999px){footer{padding-bottom:96px;}}
+
   /* ---------- Footer ---------- */
   footer{background:var(--ink);color:#E8E8E4;padding:44px 0 32px;}
   .footer-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;}
@@ -382,7 +389,6 @@
 
 <div id="verseBanner" class="verse-banner">
   <div class="wrap verse-banner-inner">
-    <span class="verse-label">Verse of the Day</span>
     <p class="verse-text" id="verseLine">Loading…</p>
   </div>
 </div>
@@ -441,7 +447,7 @@
             <text x="215" y="140" fill="#16161A">c²</text>
           </g>
         </svg>
-        <figcaption aria-hidden="true">a² + b² = c²</figcaption>
+        <figcaption aria-hidden="true">Fig. 1. a² + b² = c²</figcaption>
       </figure>
     </div>
   </section>
@@ -515,21 +521,18 @@
       </div>
       <div class="rates">
         <div class="rate">
-          <span class="step">1:1 sessions</span>
           <h3>$50 / hour</h3>
-          <p>Choose a 1-hour or 2-hour session. Two-hour sessions run straight through — no breaks.</p>
-          <button type="button" class="book-link" data-cal-namespace="oneHourRates" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a session <span aria-hidden="true">→</span></button>
+<p><strong>1:1 sessions.</strong> Choose a 1-hour or 2-hour session. Two-hour sessions run straight through — no breaks.</p>
+          <button type="button" class="book-link" data-cal-namespace="oneHourRates" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a session <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></button>
         </div>
         <div class="rate">
-          <span class="step">Group sessions</span>
           <h3>$40 / student / hour</h3>
-          <p>Up to 4 students per group — $10 off the standard $50/hr rate, per student.</p>
+<p><strong>Group sessions.</strong> Up to 4 students per group — $10 off the standard $50/hr rate, per student.</p>
         </div>
         <div class="rate">
-          <span class="step">First step</span>
           <h3>10-minute intro call</h3>
-          <p>No charge — a short call to talk through what your student needs before booking a paid session.</p>
-          <button type="button" class="book-link" data-cal-namespace="introCallRates" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book the intro call <span aria-hidden="true">→</span></button>
+<p><strong>First step.</strong> No charge — a short call to talk through what your student needs before booking a paid session.</p>
+          <button type="button" class="book-link" data-cal-namespace="introCallRates" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book the intro call <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></button>
         </div>
       </div>
       <div class="rate-details">
@@ -574,12 +577,11 @@
         <p>Henry has spent over 30 years teaching math in public and private secondary schools, in morning school, summer school, night school, and on digital learning platforms, and was once named Teacher of the Year. He holds a BS in Mathematics from Barton College, a 7–12 mathematics teaching certification, and a Master's in Mathematics Education from Georgia State University, with additional coursework at Georgia Tech and UGA. Now a retired teacher, he tutors as often as he can.</p>
         <p class="about-faith">Behind every lesson is solid math and a Jesus-loving heart — Henry teaches with both.</p>
         <p>Every session starts with work that actually mirrors the homework or test being given, and works backward from there on a shared digital whiteboard, until the concept holds on its own.</p>
-        <div class="about-facts">
-          <span class="fact">30+ years teaching &amp; tutoring</span>
-          <span class="fact">Algebra 1 through Calculus AB</span>
-          <span class="fact">100% virtual sessions</span>
-          <span class="fact">Sessions booked online</span>
-        </div>
+        <figure class="plate" aria-hidden="true">
+          <svg viewBox="0 0 320 190" width="100%"><g fill="none" stroke="#16161A" stroke-width="3" stroke-linejoin="round"><polygon points="30,160 290,160 210,30" fill="#F0BE2B"/></g><g fill="none" stroke="#16161A" stroke-width="2" stroke-dasharray="6 6"><line x1="210" y1="30" x2="210" y2="160"/></g><path d="M210 146h-14v14" fill="none" stroke="#16161A" stroke-width="2"/><g font-family="Bevan, serif" font-size="20" fill="#16161A"><text x="12" y="176">A</text><text x="296" y="176">B</text><text x="206" y="22">C</text><text x="216" y="178">D</text></g></svg>
+          <figcaption>Fig. 2. From the vertex, one perpendicular, and the triangle splits in two.</figcaption>
+        </figure>
+
       </div>
     </div>
     <div class="wrap">
@@ -623,28 +625,19 @@
       </div>
       <div class="charities">
         <div class="charity-card reveal">
-          <div class="charity-logo charity-logo-text">
-            <span>Wounded Warrior<br />Project</span>
-          </div>
           <h3>Wounded Warrior Project</h3>
           <p>Supports post-9/11 wounded, ill, and injured veterans, service members, and their families.</p>
-          <a href="https://www.woundedwarriorproject.org" target="_blank" rel="noopener noreferrer">Visit site <span aria-hidden="true">→</span></a>
+          <a href="https://www.woundedwarriorproject.org" target="_blank" rel="noopener noreferrer">Visit site <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
         </div>
         <div class="charity-card reveal">
-          <div class="charity-logo charity-logo-text">
-            <span>Humane World<br />for Animals</span>
-          </div>
           <h3>Humane World for Animals</h3>
           <p>Works to end animal cruelty and suffering through advocacy, rescue, and policy change.</p>
-          <a href="https://www.humaneworld.org/en" target="_blank" rel="noopener noreferrer">Visit site <span aria-hidden="true">→</span></a>
+          <a href="https://www.humaneworld.org/en" target="_blank" rel="noopener noreferrer">Visit site <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
         </div>
         <div class="charity-card reveal">
-          <div class="charity-logo charity-logo-text">
-            <span>St. Jude Children's<br />Research Hospital</span>
-          </div>
           <h3>St. Jude Children's Research Hospital</h3>
           <p>Leads research and treatment for childhood cancer — families never receive a bill.</p>
-          <a href="https://www.stjude.org" target="_blank" rel="noopener noreferrer">Visit site <span aria-hidden="true">→</span></a>
+          <a href="https://www.stjude.org" target="_blank" rel="noopener noreferrer">Visit site <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
         </div>
       </div>
     </div>
@@ -709,11 +702,12 @@
           <h3>Book online</h3>
           <p>Choose whichever fits — a free intro call to talk it through first, or go straight into a paid session.</p>
           <div class="contact-actions">
-            <button type="button" data-cal-namespace="oneHourContact" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary" aria-haspopup="dialog">Book a 1-hour tutoring session <span aria-hidden="true">→</span></button>
-            <button type="button" data-cal-namespace="introCallContact" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal" aria-haspopup="dialog">Book a free 10-minute intro call <span aria-hidden="true">→</span></button>
-            <a href="mailto:info@mathwithhenry.com" class="btn btn-ghost">General questions? Email info@mathwithhenry.com <span aria-hidden="true">→</span></a>
+            <button type="button" data-cal-namespace="oneHourContact" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' class="btn btn-primary" aria-haspopup="dialog">Book a 1-hour tutoring session <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></button>
+            <button type="button" data-cal-namespace="introCallContact" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-teal" aria-haspopup="dialog">Book a free 10-minute intro call <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></button>
+            <a href="mailto:info@mathwithhenry.com" class="btn btn-ghost">General questions? Email info@mathwithhenry.com <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
           </div>
           <p class="form-note" style="margin-top:16px;">Payment is due upfront via Zelle — see <a href="#rates">rates &amp; policy</a> for full details.</p>
+          <p class="qed" aria-hidden="true">Q.E.D. <span class="qed-mark"></span></p>
         </div>
       </div>
     </div>
@@ -730,6 +724,8 @@
     <p class="footer-credit">Site created by <a href="https://decorteindustries.com" target="_blank" rel="noopener noreferrer">DeCorte Industries</a></p>
   </div>
 </footer>
+
+<div class="book-bar"><button type="button" data-cal-namespace="introCallSticky" data-cal-link="hoglesby/intro-call" data-cal-config='{"layout":"month_view"}' class="btn btn-primary" aria-haspopup="dialog">Book a free intro call</button></div>
 
 <script type="text/javascript">
   // ---------- Cal.com booking embed ----------
@@ -780,6 +776,7 @@
     "introCallRates",
     "oneHourContact",
     "introCallContact",
+    "introCallSticky",
   ];
 
   // Cal's embed.js is injected by the first Cal(...) call, so nothing is

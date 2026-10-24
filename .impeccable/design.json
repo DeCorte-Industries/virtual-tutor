@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T00:00:00Z",
+  "title": "Design System: Math with Henry",
+  "extensions": {
+    "colorMeta": {
+      "euclid-blue-deep": { "role": "primary", "displayName": "Euclid Blue Deep", "canonical": "#17397F", "tonalRamp": ["#0A1733", "#0F2656", "#17397F", "#2A56B0", "#4F78C6", "#7C9CD9", "#B3C7EC", "#E4ECF9"] },
+      "euclid-blue": { "role": "primary", "displayName": "Euclid Blue", "canonical": "#2D63D4", "tonalRamp": ["#0F2150", "#183B8C", "#2D63D4", "#5584E0", "#7BA0E8", "#A3BFF0", "#CCDCF7", "#EEF3FC"] },
+      "proof-red": { "role": "secondary", "displayName": "Proof Red", "canonical": "#C8382E", "tonalRamp": ["#3D0F0B", "#6E1C16", "#A92B22", "#C8382E", "#DB6259", "#E78C85", "#F2BDB8", "#FAE6E4"] },
+      "diagram-yellow": { "role": "secondary", "displayName": "Diagram Yellow", "canonical": "#F0BE2B", "tonalRamp": ["#4A3600", "#7D5C07", "#B88C12", "#F0BE2B", "#FFD24D", "#FFE084", "#FFEDB5", "#FFF8E0"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#16161A", "tonalRamp": ["#16161A", "#2E2E33", "#4A4A50", "#6C6C72", "#8F8F94", "#B9B9B4", "#E8E8E4", "#F6F6F2"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#FAFAF6", "tonalRamp": ["#6B6B63", "#8F8F86", "#B5B5AB", "#D4D3C9", "#EFEEE6", "#F5F5EE", "#FAFAF6", "#FFFFFF"] },
+      "paper-shade": { "role": "neutral", "displayName": "Paper Shade", "canonical": "#EFEEE6", "tonalRamp": ["#5E5E56", "#85857B", "#ABAAA0", "#CBCABF", "#E0DFD5", "#EFEEE6", "#F6F5EF", "#FBFBF8"] },
+      "on-blue": { "role": "neutral", "displayName": "On-Blue", "canonical": "#DCE6FA", "tonalRamp": ["#5A6F99", "#7D92BC", "#9FB3DC", "#BCCCEB", "#DCE6FA", "#E8EFFB", "#F2F6FD", "#FAFCFF"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero H1 in Bevan, with yellow highlighted course names." },
+      "headline": { "displayName": "Headline", "purpose": "Section H2s in Bevan." },
+      "title": { "displayName": "Title", "purpose": "Card titles and FAQ questions in bold Source Serif 4." },
+      "body": { "displayName": "Body", "purpose": "All running text, 56-62ch." },
+      "label": { "displayName": "Label", "purpose": "Nav links, chips and fact tags in semibold Source Serif 4." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "place", "value": "0.7s cubic-bezier(.16,1,.3,1)", "purpose": "Proof figure shapes scale in from 0.82 with staggered delays." },
+      { "name": "rise", "value": "0.7s cubic-bezier(.16,1,.3,1)", "purpose": "Course cards rise 28px into the staircase when it enters view." },
+      { "name": "lift", "value": "0.16s cubic-bezier(.2,.8,.2,1)", "purpose": "Buttons lift 3px on hover; disabled under reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "stairs", "value": "900px" },
+      { "name": "hero", "value": "960px" },
+      { "name": "nav", "value": "1000px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Red flat block for the main booking action.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Book a 1-hour tutoring session</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border:3px solid #16161A;border-radius:0;font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:1.02rem;line-height:1.2;cursor:pointer;transition:transform .16s cubic-bezier(.2,.8,.2,1),background-color .16s ease;}.ds-btn:hover{transform:translateY(-3px);}.ds-btn:active{transform:none;}.ds-btn:focus-visible{outline:3px solid #16161A;outline-offset:3px;}.ds-btn-primary{background:#C8382E;color:#fff;}.ds-btn-primary:hover{background:#A92B22;}"
+    },
+    {
+      "name": "Yellow Button",
+      "kind": "button",
+      "refersTo": "button-yellow",
+      "description": "Yellow flat block for the free intro call.",
+      "html": "<button class=\"ds-btn2 ds-btn-yellow\">Book a free 10-minute intro call</button>",
+      "css": ".ds-btn2{display:inline-flex;padding:14px 24px;border:3px solid #16161A;border-radius:0;font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:1.02rem;cursor:pointer;transition:transform .16s cubic-bezier(.2,.8,.2,1),background-color .16s ease;}.ds-btn2:hover{transform:translateY(-3px);}.ds-btn2:focus-visible{outline:3px solid #16161A;outline-offset:3px;}.ds-btn-yellow{background:#F0BE2B;color:#16161A;}.ds-btn-yellow:hover{background:#FFD24D;}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Transparent ruled block for email and tertiary actions.",
+      "html": "<a class=\"ds-btn3\" href=\"#\">Email info@mathwithhenry.com</a>",
+      "css": ".ds-btn3{display:inline-flex;padding:14px 24px;border:3px solid #16161A;border-radius:0;background:transparent;color:#16161A;font-family:'Source Serif 4',Georgia,serif;font-weight:700;text-decoration:none;transition:transform .16s cubic-bezier(.2,.8,.2,1),background-color .16s ease;}.ds-btn3:hover{background:#EFEEE6;transform:translateY(-3px);}.ds-btn3:focus-visible{outline:3px solid #16161A;outline-offset:3px;}"
+    },
+    {
+      "name": "Course Card",
+      "kind": "card",
+      "refersTo": "course-card-red",
+      "description": "Solid-color block in the five-step staircase.",
+      "html": "<div class=\"ds-course\"><span class=\"ds-course-n\">1</span><h3>Algebra 1</h3><p>Foundations for everything after.</p></div>",
+      "css": ".ds-course{background:#C8382E;color:#fff;border:3px solid #16161A;padding:22px 20px 24px;min-height:15rem;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;font-family:'Source Serif 4',Georgia,serif;}.ds-course-n{font-family:Bevan,Georgia,serif;font-size:2.6rem;line-height:1;margin-bottom:auto;}.ds-course h3{margin:0;font-size:1.35rem;line-height:1.2;}.ds-course p{margin:0;font-size:.98rem;}"
+    },
+    {
+      "name": "Note Card",
+      "kind": "card",
+      "refersTo": "card-note",
+      "description": "Paper card with ruled border and Bevan title.",
+      "html": "<div class=\"ds-note\"><h3>A note from Henry</h3><p>Plain, warm copy.</p></div>",
+      "css": ".ds-note{background:#FAFAF6;color:#16161A;border:3px solid #16161A;padding:26px 28px;font-family:'Source Serif 4',Georgia,serif;}.ds-note h3{margin:0 0 10px;font-family:Bevan,Georgia,serif;font-weight:400;font-size:1.2rem;}.ds-note p{margin:0;}"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "White square field with a 3px ink border.",
+      "html": "<label class=\"ds-label\" for=\"ds-i\">Email</label><input class=\"ds-input\" id=\"ds-i\" type=\"email\">",
+      "css": ".ds-label{display:block;margin-bottom:6px;font-weight:600;font-family:'Source Serif 4',Georgia,serif;}.ds-input{width:100%;padding:12px 14px;border:3px solid #16161A;border-radius:0;background:#fff;color:#16161A;font:inherit;}.ds-input:focus-visible{outline:3px solid #16161A;outline-offset:3px;}"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Semibold link with a red bottom rule on hover.",
+      "html": "<a class=\"ds-nav\" href=\"#\">Courses</a>",
+      "css": ".ds-nav{font-family:'Source Serif 4',Georgia,serif;font-size:.98rem;font-weight:600;color:#16161A;text-decoration:none;padding:4px 0;border-bottom:3px solid transparent;transition:border-color .15s ease;}.ds-nav:hover{border-bottom-color:#C8382E;}.ds-nav:focus-visible{outline:3px solid #16161A;outline-offset:3px;}"
+    },
+    {
+      "name": "Fact Tag",
+      "kind": "chip",
+      "refersTo": "label",
+      "description": "Small 2px-ruled tag for credentials.",
+      "html": "<span class=\"ds-fact\">30+ years teaching</span>",
+      "css": ".ds-fact{display:inline-block;padding:8px 14px;border:2px solid #16161A;font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:.92rem;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Colored-Diagram Euclid",
+    "overview": "The site is a page from an 1847 colored-diagram Euclid (Byrne's), with Henry as the teacher walking the proof. Surfaces are flat blocks of Euclid blue, red, yellow, ink and white paper, divided by thick black rules. Nothing is rounded, shadowed or gradient-filled; depth comes from color adjacency and rule weight alone. The page reads top to bottom as a sequence of full-width color bands, like plates in a book.\n\nDisplay type is heavy Victorian slab (Bevan) used sparingly for headings and numerals; everything a parent actually reads is a plain book serif (Source Serif 4). The signature moment is a Pythagorean figure of three flat squares on a white triangle that assembles on load, and the five-course \"staircase\" of colored blocks that rises in height from Algebra 1 to Calculus AB.",
+    "keyCharacteristics": [
+      "Four Euclid colors (red, yellow, blue, ink) on blue-deep and paper fields",
+      "3px ink rules as the only structure; square corners everywhere",
+      "Bevan for display, Source Serif 4 for all reading text",
+      "Flat color blocks as buttons, cards, numerals and bullets",
+      "Motion is short and structural (shapes place, cards rise, buttons lift)"
+    ],
+    "rules": [
+      { "name": "The Four Colors Rule", "body": "Accents are only red, yellow, blue and ink, applied as whole flat fills. No tints, no gradients, no translucent overlays.", "section": "colors" },
+      { "name": "The Ink Rule", "body": "Every border is Ink (white on blue bands), 3px. Lighter hairlines appear only inside lists (1px) and tags (2px).", "section": "colors" },
+      { "name": "The Slab-for-Headings Rule", "body": "Bevan is for headings, numerals, the brand name, and the proof caption. Running text is always Source Serif 4.", "section": "typography" },
+      { "name": "The Flat-Plate Rule", "body": "Surfaces are flat fills with ink rules. Depth is never simulated with shadow, blur or gradient.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do fill surfaces with one flat Euclid color and separate them with 3px Ink rules.",
+      "Do keep every corner at 0px.",
+      "Do set headings, numerals and the brand name in Bevan and everything read in Source Serif 4.",
+      "Do use red for the main action, yellow for the secondary action and highlights.",
+      "Do keep focus outlines at 3px, yellow on dark grounds.",
+      "Do honor reduced motion by removing placement, rise and lift animation."
+    ],
+    "donts": [
+      "Don't add shadows, gradients, blur or translucent fills.",
+      "Don't round corners or use pill shapes.",
+      "Don't introduce colors beyond the four Euclid colors, paper and their listed pressed states.",
+      "Don't set body copy in Bevan or bold/italicize Bevan.",
+      "Don't fall back to the green-chalkboard-and-pills tutoring template."
+    ]
+  }
+}
