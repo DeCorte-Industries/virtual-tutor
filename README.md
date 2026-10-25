@@ -1,5 +1,7 @@
 # Math with Henry
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5be8146a-4a07-483e-90f1-7f04dfbb3c51/deploy-status)](https://app.netlify.com/projects/mathwithhenry/deploys)
+
 Website for Henry Oglesby's private virtual math tutoring business: https://mathwithhenry.com
 
 Static single-page site (HTML/CSS/JS, no build step). The published site lives in `public/`.
