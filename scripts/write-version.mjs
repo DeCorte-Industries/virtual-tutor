@@ -35,7 +35,7 @@ export function buildVersion(env = {}, now = new Date()) {
 export async function writeVersion(outputPath = DEFAULT_OUTPUT_PATH, env = process.env, now = new Date()) {
   const version = buildVersion(env, now);
   await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, JSON.stringify(version, null, 2) + "\n", "utf8");
+  await writeFile(outputPath, `${JSON.stringify(version, null, 2)}\n`, "utf8");
   return version;
 }
 
