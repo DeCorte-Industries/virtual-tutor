@@ -2,6 +2,9 @@
 # are never served from mathwithhenry.com.
 [build]
   publish = "public"
+  # Writes public/version.json (commit, branch, context, deploy id, build time)
+  # so a deploy can be verified at /version.json. No dependencies.
+  command = "node scripts/write-version.mjs"
 
 # Long-lived caching for static images (filenames change if the image does).
 [[headers]]
@@ -20,3 +23,9 @@
   [headers.values]
     Cache-Control = "no-store"
     X-Robots-Tag = "noindex, nofollow"
+
+# Build stamp for deploy verification: always fetch fresh.
+[[headers]]
+  for = "/version.json"
+  [headers.values]
+    Cache-Control = "no-store"
