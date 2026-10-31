@@ -53,3 +53,6 @@ orca.jpeg
 deployment-steps.md
 
 *.docx
+
+# Generated at build time by scripts/write-version.mjs
+public/version.json
