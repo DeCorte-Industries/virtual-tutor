@@ -1,5 +1,5 @@
-import { getStore } from "@netlify/blobs";
 import { timingSafeEqual } from "node:crypto";
+import { getStore } from "@netlify/blobs";
 
 const LIMITS = { verseText: 600, verseRef: 80, note: 1500 };
 
