@@ -4,9 +4,15 @@
   "version": "1.0.0",
   "description": "Static site for mathwithhenry.com with a small Netlify Functions backend for owner-edited content.",
   "scripts": {
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "check": "biome check . && node scripts/check-syntax.mjs && node --test",
     "test": "node --test"
   },
   "dependencies": {
     "@netlify/blobs": "^8.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.4"
   }
 }
