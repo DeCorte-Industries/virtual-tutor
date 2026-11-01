@@ -1,0 +1,156 @@
+/* "The Top Five" (issue #13): worked problems by subject. Uses the site's
+   tokens from index.html (--ink, --rule, --red, --yellow, --paper, --display). */
+.tf-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0 0 28px;
+  border-left: var(--rule);
+}
+/* Tabs only show once there are two or more subjects. */
+.tf-tabs[hidden] {
+  display: none;
+}
+.tf-tab {
+  font: inherit;
+  font-weight: 700;
+  padding: 12px 20px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--rule);
+  border-left: 0;
+  margin-top: -3px;
+  cursor: pointer;
+}
+.tf-tab:hover {
+  background: var(--yellow);
+}
+.tf-tab[aria-selected="true"] {
+  background: var(--ink);
+  color: #fff;
+}
+.tf-subject {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  margin: 0 0 10px;
+}
+.tf-intro {
+  max-width: 62ch;
+  margin: 0 0 24px;
+  white-space: pre-line;
+}
+.tf-problems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+.tf-problem {
+  background: var(--paper);
+  border: var(--rule);
+  padding: 22px 24px;
+  min-width: 0;
+}
+.tf-label {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 12px;
+}
+.tf-num {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  line-height: 1;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  display: inline-grid;
+  place-items: center;
+  background: var(--red);
+  color: #fff;
+  border: var(--rule);
+  flex-shrink: 0;
+}
+.tf-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+/* Math text: keep Henry's line breaks and spacing, wrap long expressions. */
+.tf-statement,
+.tf-steps li,
+.tf-answer,
+.tf-intro {
+  font-variant-numeric: lining-nums tabular-nums;
+  overflow-wrap: anywhere;
+}
+.tf-statement {
+  white-space: pre-wrap;
+  font-size: 1.1rem;
+  margin: 0 0 14px;
+}
+.tf-solution summary {
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--red);
+  text-underline-offset: 5px;
+  width: fit-content;
+}
+.tf-solution summary:hover {
+  text-decoration-color: var(--blue);
+}
+.tf-steps {
+  margin: 16px 0 0;
+  padding-left: 1.6em;
+  display: grid;
+  gap: 8px;
+}
+.tf-steps li {
+  white-space: pre-wrap;
+  padding-left: 4px;
+}
+.tf-answer {
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  background: var(--yellow);
+  border: var(--rule);
+  width: fit-content;
+  max-width: 100%;
+}
+.tf-soon,
+.tf-empty {
+  font-style: italic;
+}
+.tf-empty {
+  background: var(--paper);
+  border: 3px dashed var(--ink);
+  padding: 22px 24px;
+  max-width: 62ch;
+}
+.tf-problem .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+.tf-cta {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+.tf-cta p {
+  font-weight: 600;
+  max-width: 46ch;
+}
+@media (max-width: 599px) {
+  .tf-problem {
+    padding: 18px 16px;
+  }
+  .tf-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

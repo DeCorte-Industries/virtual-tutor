@@ -83,6 +83,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bevan&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/top-five.css">
 <script>document.documentElement.classList.add("js")</script>
 <style>
   :root{
@@ -500,6 +501,24 @@
     </div>
   </section>
 
+  <!-- The Top Five (#13): worked problems by subject. Content: /api/top-five, edited at /admin/. -->
+  <section id="top-five" class="band band-paper2" aria-labelledby="topFiveHeading">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="topFiveHeading">The Top Five.</h2>
+        <p>For the moment you think, "If I could just see one like this worked out." Five problems per subject, worked step by step the way Henry works them in a session.</p>
+      </div>
+      <div class="tf-tabs" id="topFiveTabs" role="tablist" aria-label="Subjects" hidden></div>
+      <div class="tf-panel" id="topFivePanel" role="tabpanel" aria-live="polite">
+        <p class="tf-empty">Loading worked problems…</p>
+      </div>
+      <div class="tf-cta">
+        <p id="topFiveCtaText">Want more worked out with you? Book a lesson hour with Henry.</p>
+        <button type="button" class="btn btn-primary" data-cal-namespace="oneHourTopFive" data-cal-link="hoglesby/one-hour-tutoring" data-cal-config='{"layout":"month_view"}' aria-haspopup="dialog">Book a lesson hour <svg class="arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></button>
+      </div>
+    </div>
+  </section>
+
   <section id="how" class="band band-yellow">
     <div class="wrap">
       <div class="section-head reveal">
@@ -796,6 +815,7 @@
     "introCallHero",
     "oneHourHero",
     "oneHourRates",
+    "oneHourTopFive",
     "introCallRates",
     "oneHourContact",
     "introCallContact",
@@ -1009,6 +1029,7 @@
     document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
   }
 </script>
+<script src="/js/top-five.js" defer></script>
 
 <script>
   // ---------- Everyday math videos (#12) ----------

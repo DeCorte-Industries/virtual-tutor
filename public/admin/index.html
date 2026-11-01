@@ -34,6 +34,7 @@
   .msg ul{margin:6px 0 0;padding-left:20px;}
   [hidden]{display:none !important;}
 </style>
+<link rel="stylesheet" href="/admin/top-five-admin.css" />
 </head>
 <body>
 <main>
@@ -86,6 +87,21 @@
       <button type="submit" id="saveVideosBtn">Save videos</button>
       <p class="msg" id="videosMsg" role="status"></p>
     </form>
+
+    <!-- The Top Five (#13): editor lives in top-five-admin.js and saves separately. -->
+    <section id="topFiveEditor" class="card" hidden>
+      <h2>The Top Five</h2>
+      <p class="hint">Up to five worked problems per subject, shown in "The Top Five" on the home page. A subject with no problems shows a "coming soon" note. This section has its own Save button.</p>
+      <p class="hint">Math: type it plainly (x² + 3x − 4 = 0, using the symbol buttons), or wrap LaTeX in \( and \) for typeset math, for example \(\frac{1}{2}x + 3 = 7\).</p>
+      <div class="tf-symbols" id="tfSymbols" aria-label="Insert a math symbol"></div>
+      <div id="tfSubjects"></div>
+      <button type="button" class="tf-small" id="tfAddSubject">Add a subject</button>
+      <div>
+        <button type="button" id="tfSave">Save the Top Five</button>
+        <a class="tf-view" href="/#top-five" target="_blank" rel="noopener">View on the site</a>
+      </div>
+      <p class="msg" id="tfMsg" role="status"></p>
+    </section>
   </div>
 </main>
 <script>
@@ -121,6 +137,8 @@
     $('otherNote').value = content.otherNote || '';
     updateCounts();
     loadVideosEditor();
+    window.adminSession = { password }; // Top Five editor (#13): read on startup if it loads after this
+    document.dispatchEvent(new CustomEvent('admin:signedin', { detail: { password } })); // Top Five editor (#13)
   }
 
   function showLogin() {
@@ -128,6 +146,8 @@
     try { sessionStorage.removeItem('adminPw'); } catch (e) {}
     $('editorView').hidden = true;
     $('loginView').hidden = false;
+    window.adminSession = null; // Top Five editor (#13)
+    document.dispatchEvent(new CustomEvent('admin:signedout')); // Top Five editor (#13)
   }
 
   $('loginForm').addEventListener('submit', async (e) => {
@@ -319,6 +339,7 @@
   });
 
   $('signOut').addEventListener('click', showLogin);
+  document.addEventListener('admin:expired', showLogin); // Top Five editor (#13)
   document.querySelectorAll('textarea').forEach((t) => t.addEventListener('input', updateCounts));
 
   if (password) {
@@ -326,5 +347,7 @@
   }
 })();
 </script>
+<script src="/admin/top-five-session.js"></script>
+<script src="/admin/top-five-admin.js"></script>
 </body>
 </html>
