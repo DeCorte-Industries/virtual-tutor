@@ -1,8 +1,8 @@
 import { timingSafeEqual } from "node:crypto";
 import { getStore } from "@netlify/blobs";
-import { handleTopFiveAction, isTopFiveAction } from "./lib/top-five.mjs";
 
 import { handleVideosAction } from "./lib/everyday-videos.mjs";
+import { handleTopFiveAction, isTopFiveAction } from "./lib/top-five.mjs";
 
 const LIMITS = { verseText: 600, verseRef: 80, note: 1500 };
 
