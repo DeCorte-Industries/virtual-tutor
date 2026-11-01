@@ -1,0 +1,62 @@
+/* "The Top Five" editor (issue #13). Uses the admin page's own tokens. */
+.tf-subject {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 4px 16px 16px;
+  margin: 16px 0;
+}
+.tf-subject > summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 12px 0 4px;
+}
+.tf-problem {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px 14px 14px;
+  margin: 16px 0 0;
+}
+.tf-problem legend {
+  font-weight: 600;
+  color: var(--gold);
+  padding: 0 6px;
+}
+.tf-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+button.tf-small {
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  font-weight: 500;
+}
+.tf-row button.tf-small {
+  margin-top: 0;
+}
+button.tf-small:disabled {
+  cursor: not-allowed;
+}
+.tf-symbols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 4px;
+}
+button.tf-symbol {
+  margin: 0;
+  min-width: 40px;
+  padding: 6px 10px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+  font-weight: 500;
+}
+.tf-view {
+  color: var(--dim);
+  margin-left: 16px;
+}
