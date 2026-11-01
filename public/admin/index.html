@@ -24,6 +24,14 @@
   .msg{margin-top:12px;min-height:1.4em;}
   .msg.ok{color:var(--teal);} .msg.err{color:var(--coral);}
   .count{float:right;color:var(--dim);font-size:0.82rem;font-weight:400;}
+  /* Everyday math videos (#12) */
+  .video-row{border-top:1px solid var(--line);padding-top:14px;margin-top:16px;}
+  .video-row-head{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .video-tools{display:flex;gap:6px;}
+  button.mini{margin:0;padding:6px 10px;font-size:0.85rem;background:var(--bg);color:var(--text);border:1px solid var(--line);}
+  button.mini:disabled{cursor:default;opacity:0.4;}
+  button.secondary{background:none;color:var(--gold);border:1px solid var(--gold);}
+  .msg ul{margin:6px 0 0;padding-left:20px;}
   [hidden]{display:none !important;}
 </style>
 </head>
@@ -67,6 +75,17 @@
       <button type="submit" id="saveBtn">Save changes</button>
       <p class="msg" id="saveMsg" role="status"></p>
     </form>
+    <form id="videosForm" novalidate>
+      <div class="card">
+        <h2>Everyday math videos</h2>
+        <p class="hint">Shown to visitors in the "Math in everyday life" section. Paste a YouTube link (youtube.com or youtu.be) and give each video a title. The caption is optional. Up to 24 videos, shown in this order. With no videos, visitors see a short "coming soon" message.</p>
+        <p class="hint" id="videosEmpty">No videos yet. Click "Add a video" to start.</p>
+        <div id="videoList"></div>
+        <button type="button" class="secondary" id="addVideo">Add a video</button>
+      </div>
+      <button type="submit" id="saveVideosBtn">Save videos</button>
+      <p class="msg" id="videosMsg" role="status"></p>
+    </form>
   </div>
 </main>
 <script>
@@ -101,6 +120,7 @@
     $('mathNote').value = content.mathNote || '';
     $('otherNote').value = content.otherNote || '';
     updateCounts();
+    loadVideosEditor();
   }
 
   function showLogin() {
@@ -142,6 +162,159 @@
     } catch (err) {
       if (err.status === 401) { showLogin(); return; }
       msg.className = 'msg err'; msg.textContent = 'Could not save: ' + err.message;
+    } finally { btn.disabled = false; }
+  });
+
+  // ---------- Everyday math videos (#12) ----------
+  // Saved separately from the verse and notes (action "saveVideos"). Built with
+  // createElement and .value/.textContent only, never innerHTML.
+  const MAX_VIDEOS = 24;
+  let videoRowCount = 0;
+
+  async function videosApi(payload) {
+    const res = await fetch('/api/admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({ password }, payload)),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw Object.assign(new Error(data.error || 'Something went wrong'), { status: res.status, errors: data.errors || [] });
+    }
+    return data;
+  }
+
+  function videoField(row, key, labelText, el, max) {
+    const id = 'video' + row.dataset.n + '-' + key;
+    const label = document.createElement('label');
+    label.htmlFor = id;
+    label.textContent = labelText;
+    el.id = id;
+    el.dataset.key = key;
+    el.maxLength = max;
+    row.append(label, el);
+  }
+
+  function miniButton(text, aria, onClick) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'mini';
+    b.textContent = text;
+    b.setAttribute('aria-label', aria);
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
+  function renumberVideos() {
+    const rows = $('videoList').querySelectorAll('.video-row');
+    rows.forEach((row, i) => {
+      row.querySelector('.video-num').textContent = 'Video ' + (i + 1);
+      row.querySelector('[data-move="up"]').disabled = i === 0;
+      row.querySelector('[data-move="down"]').disabled = i === rows.length - 1;
+    });
+    $('videosEmpty').hidden = rows.length > 0;
+    $('addVideo').disabled = rows.length >= MAX_VIDEOS;
+  }
+
+  function addVideoRow(video) {
+    const row = document.createElement('div');
+    row.className = 'video-row';
+    row.dataset.n = String(++videoRowCount);
+    const head = document.createElement('div');
+    head.className = 'video-row-head';
+    const num = document.createElement('strong');
+    num.className = 'video-num';
+    const tools = document.createElement('span');
+    tools.className = 'video-tools';
+    const up = miniButton('↑', 'Move this video up', () => {
+      if (row.previousElementSibling) row.parentNode.insertBefore(row, row.previousElementSibling);
+      renumberVideos();
+    });
+    up.dataset.move = 'up';
+    const down = miniButton('↓', 'Move this video down', () => {
+      if (row.nextElementSibling) row.parentNode.insertBefore(row.nextElementSibling, row);
+      renumberVideos();
+    });
+    down.dataset.move = 'down';
+    const remove = miniButton('Remove', 'Remove this video', () => { row.remove(); renumberVideos(); });
+    tools.append(up, down, remove);
+    head.append(num, tools);
+    row.append(head);
+
+    const title = document.createElement('input');
+    const url = document.createElement('input');
+    url.type = 'url';
+    url.placeholder = 'https://www.youtube.com/watch?v=...';
+    const caption = document.createElement('textarea');
+    caption.style.minHeight = '70px';
+    videoField(row, 'title', 'Title', title, 120);
+    videoField(row, 'url', 'YouTube link', url, 300);
+    videoField(row, 'caption', 'Caption (optional)', caption, 300);
+    if (video) {
+      title.value = video.title || '';
+      url.value = video.id ? 'https://www.youtube.com/watch?v=' + video.id : '';
+      caption.value = video.caption || '';
+    }
+    $('videoList').append(row);
+    renumberVideos();
+    return row;
+  }
+
+  function showVideos(videos) {
+    $('videoList').replaceChildren();
+    (videos || []).forEach((v) => addVideoRow(v));
+    renumberVideos();
+  }
+
+  function showVideosMessage(kind, text, errors) {
+    const msg = $('videosMsg');
+    msg.className = 'msg' + (kind ? ' ' + kind : '');
+    msg.textContent = text;
+    if (errors && errors.length) {
+      const list = document.createElement('ul');
+      errors.forEach((e) => {
+        const li = document.createElement('li');
+        li.textContent = e;
+        list.append(li);
+      });
+      msg.append(list);
+    }
+  }
+
+  async function loadVideosEditor() {
+    showVideosMessage('', 'Loading videos…');
+    try {
+      const data = await videosApi({ action: 'loadVideos' });
+      showVideos(data.videos);
+      showVideosMessage('', '');
+    } catch (err) {
+      if (err.status === 401) { showLogin(); return; }
+      showVideosMessage('err', 'Could not load videos: ' + err.message);
+    }
+  }
+
+  $('addVideo').addEventListener('click', () => {
+    const row = addVideoRow(null);
+    row.querySelector('input').focus();
+  });
+
+  $('videosForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('saveVideosBtn');
+    const videos = Array.from($('videoList').querySelectorAll('.video-row')).map((row) => ({
+      title: row.querySelector('[data-key="title"]').value,
+      url: row.querySelector('[data-key="url"]').value,
+      caption: row.querySelector('[data-key="caption"]').value,
+    }));
+    btn.disabled = true;
+    showVideosMessage('', 'Saving…');
+    try {
+      const data = await videosApi({ action: 'saveVideos', videos });
+      showVideos(data.videos);
+      showVideosMessage('ok', 'Saved. Your videos are live.');
+    } catch (err) {
+      if (err.status === 401) { showLogin(); return; }
+      showVideosMessage('err', 'Could not save: ' + err.message, err.errors);
     } finally { btn.disabled = false; }
   });
 
