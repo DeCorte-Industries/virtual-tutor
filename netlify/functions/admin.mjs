@@ -1,5 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 import { getStore } from "@netlify/blobs";
+import { handleTopFiveAction, isTopFiveAction } from "./lib/top-five.mjs";
 
 import { handleVideosAction } from "./lib/everyday-videos.mjs";
 
@@ -59,6 +60,12 @@ export default async (req) => {
     };
     await store.setJSON("content", content);
     return json({ ok: true, content });
+  }
+
+  // The Top Five (#13) has its own blob key and actions; see netlify/functions/lib/top-five.mjs.
+  if (isTopFiveAction(body.action)) {
+    const result = await handleTopFiveAction(store, body);
+    return json(result.body, result.status);
   }
 
   return json({ error: "Unknown action" }, 400);
