@@ -1,6 +1,8 @@
 import { timingSafeEqual } from "node:crypto";
 import { getStore } from "@netlify/blobs";
 
+import { handleVideosAction } from "./lib/everyday-videos.mjs";
+
 const LIMITS = { verseText: 600, verseRef: 80, note: 1500 };
 
 const json = (body, status = 200) =>
@@ -37,6 +39,10 @@ export default async (req) => {
   }
 
   const store = getStore("site");
+
+  // Everyday math videos (#12): actions "loadVideos" and "saveVideos".
+  const videosResult = await handleVideosAction(store, body);
+  if (videosResult) return json(videosResult.body, videosResult.status);
 
   if (body.action === "login" || body.action === "load") {
     return json({ ok: true, content: (await store.get("content", { type: "json" })) || {} });
