@@ -236,6 +236,16 @@
         },
         s === 0,
       ),
+      smallButton(
+        "Move subject down",
+        () => {
+          move(subjects, s, s + 1);
+          openIndex = s + 1;
+          markDirty();
+          render();
+        },
+        s === subjects.length - 1,
+      ),
       smallButton("Remove subject", () => {
         const label = subject.name || "this subject";
         if (!window.confirm(`Remove ${label} and all of its problems? This can't be undone after you save.`))
@@ -295,8 +305,8 @@
     document.dispatchEvent(new CustomEvent("admin:expired"));
   }
 
-  document.addEventListener("admin:signedin", (e) => {
-    password = e.detail.password;
+  function signedIn(pw) {
+    password = pw;
     root.hidden = false;
     setMsg("", "Loading…");
     api({ action: "topFiveLoad" })
@@ -308,8 +318,20 @@
         if (err.status === 401) return expired();
         setMsg("err", `Could not load the Top Five: ${err.message}`);
       });
-  });
-  document.addEventListener("admin:signedout", signedOut);
+  }
+  // Checks for a sign-in that already happened and listens for later ones (see top-five-session.js).
+  window.tfConnectSession(window, document, signedIn, signedOut);
+
+  // Signing out drops unsaved Top Five edits, so ask first. Listening on document in the capture phase
+  // runs this before the page's own sign-out handler on the button, so cancelling stops it.
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (!e.target.closest?.("#signOut") || !dirty || !password) return;
+      if (!window.confirm("Sign out and lose your unsaved Top Five changes?")) e.stopPropagation();
+    },
+    { capture: true },
+  );
 
   addSubjectBtn.addEventListener("click", () => {
     subjects.push({ name: "", intro: "", problems: [] });

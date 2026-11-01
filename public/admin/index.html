@@ -137,6 +137,7 @@
     $('otherNote').value = content.otherNote || '';
     updateCounts();
     loadVideosEditor();
+    window.adminSession = { password }; // Top Five editor (#13): read on startup if it loads after this
     document.dispatchEvent(new CustomEvent('admin:signedin', { detail: { password } })); // Top Five editor (#13)
   }
 
@@ -145,6 +146,7 @@
     try { sessionStorage.removeItem('adminPw'); } catch (e) {}
     $('editorView').hidden = true;
     $('loginView').hidden = false;
+    window.adminSession = null; // Top Five editor (#13)
     document.dispatchEvent(new CustomEvent('admin:signedout')); // Top Five editor (#13)
   }
 
@@ -345,6 +347,7 @@
   }
 })();
 </script>
+<script src="/admin/top-five-session.js"></script>
 <script src="/admin/top-five-admin.js"></script>
 </body>
 </html>
