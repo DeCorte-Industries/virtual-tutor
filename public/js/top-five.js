@@ -63,6 +63,12 @@
             { left: "\\(", right: "\\)", display: false },
           ],
           throwOnError: false,
+          // Set explicitly so a change in KaTeX's defaults can't loosen them. trust: false blocks
+          // \href, \url, \includegraphics and \html* commands. strict: "ignore" lets KaTeX accept
+          // harmless non-standard input (Unicode like ² or − inside math) quietly instead of logging
+          // warnings in visitors' consoles. It only affects LaTeX-compatibility checks, not security.
+          trust: false,
+          strict: "ignore",
         });
       })
       .catch(() => {});
