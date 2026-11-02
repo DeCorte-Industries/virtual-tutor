@@ -12,6 +12,12 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Self-hosted web fonts (#16). Cached like images, so give a changed font a new filename.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Serverless functions: /api/content (public read) and /api/admin (password-protected write).
 [functions]
   directory = "netlify/functions"
