@@ -1,4 +1,4 @@
-/* "The Top Five" (issue #13): worked problems by subject. Uses the site's
+/* "Pick 5" (issue #18; was "The Top Five", #13): worked problems by subject. Uses the site's
    tokens from index.html (--ink, --rule, --red, --yellow, --paper, --display). */
 .tf-tabs {
   display: flex;
@@ -128,6 +128,92 @@
   border: 3px dashed var(--ink);
   padding: 22px 24px;
   max-width: 62ch;
+}
+/* Pick 5 videos (#18). Every slot is a fixed 16:9 box, so the thumbnail, the
+   player that replaces it, and the "coming soon" placeholder all take the same
+   space and nothing below them moves. Video first on phones; side by side with
+   the typed problem on wide screens. */
+.tf-problem {
+  display: grid;
+  gap: 18px 28px;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .tf-problem {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+}
+.tf-body {
+  min-width: 0;
+}
+.tf-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  border: var(--rule);
+  overflow: hidden;
+}
+.tf-video img,
+.tf-video iframe,
+.tf-video-play {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.tf-video img {
+  object-fit: cover;
+}
+.tf-video-play {
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.tf-video-play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 68px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  background: var(--red);
+  border: var(--rule);
+}
+.tf-video-play-icon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-35%, -50%);
+  border-style: solid;
+  border-width: 10px 0 10px 17px;
+  border-color: transparent transparent transparent #fff;
+}
+.tf-video-play:hover .tf-video-play-icon,
+.tf-video-play:focus-visible .tf-video-play-icon {
+  background: var(--ink);
+}
+.tf-video-play:focus-visible {
+  outline: 4px solid var(--yellow);
+  outline-offset: -4px;
+}
+.tf-video-soon {
+  background: var(--paper);
+  border: 3px dashed var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.tf-video-soon-text {
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+}
+.tf-empty-videos {
+  max-width: 480px;
+  margin-top: 20px;
 }
 .tf-problem .katex-display {
   overflow-x: auto;

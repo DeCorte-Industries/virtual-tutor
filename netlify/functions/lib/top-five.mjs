@@ -1,10 +1,17 @@
-// "The Top Five" (issue #13): up to five worked problems per subject, edited by
-// Henry at /admin/ and shown on the home page.
+// "Pick 5" (issue #18; first built as "The Top Five" in issue #13): up to five
+// worked problems per subject, edited by Henry at /admin/ and shown on the home
+// page. Each problem can have a YouTube video of Henry working it, which joins
+// or replaces the typed problem. Only the 11-character video ID is stored.
+//
+// The internal names (topFive key, /api/top-five, topFiveLoad/topFiveSave)
+// keep their original names so saved data and links keep working.
 //
 // Stored in Netlify Blobs (store "site", key "topFive"), apart from the
 // verse/notes "content" key, so saving one editor never overwrites the other.
 // Everything here is pure or takes the blob store as an argument, so it can be
 // tested without the Netlify runtime.
+
+import { parseYouTubeId } from "./everyday-videos.mjs";
 
 export const TOP_FIVE_KEY = "topFive";
 
@@ -52,17 +59,28 @@ function steps(value) {
 
 const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 
+// The video arrives as whatever Henry pasted (a youtube.com or youtu.be link, or
+// a stored ID). It is reduced to the video ID; anything else is flagged invalid,
+// so a bad link is reported instead of silently dropped.
 function normalizeProblem(raw) {
   const source = isObject(raw) ? raw : {};
+  const link = typeof source.video === "string" ? source.video.trim() : source.video;
+  const hasLink = link !== undefined && link !== null && link !== "";
+  const video = hasLink ? parseYouTubeId(link) : "";
   return {
-    title: text(source.title, TOP_FIVE_LIMITS.title),
-    problem: text(source.problem, TOP_FIVE_LIMITS.problem),
-    steps: steps(source.steps),
-    answer: text(source.answer, TOP_FIVE_LIMITS.answer),
+    problem: {
+      title: text(source.title, TOP_FIVE_LIMITS.title),
+      problem: text(source.problem, TOP_FIVE_LIMITS.problem),
+      steps: steps(source.steps),
+      answer: text(source.answer, TOP_FIVE_LIMITS.answer),
+      video: video || "",
+    },
+    badVideo: hasLink && !video,
   };
 }
 
-const problemIsBlank = (p) => !p.title && !p.problem && p.steps.length === 0 && !p.answer;
+const problemIsBlank = ({ problem: p, badVideo }) =>
+  !p.title && !p.problem && p.steps.length === 0 && !p.answer && !p.video && !badVideo;
 
 // Validates and cleans what the admin sends. Blank rows are dropped, text is
 // trimmed and capped, and anything that would publish a confusing page is
@@ -70,7 +88,7 @@ const problemIsBlank = (p) => !p.title && !p.problem && p.steps.length === 0 && 
 // Returns { ok: true, value: { subjects } } or { ok: false, errors: [string] }.
 export function normalizeTopFive(input) {
   if (!isObject(input) || !Array.isArray(input.subjects)) {
-    return { ok: false, errors: ["The Top Five data is missing its list of subjects."] };
+    return { ok: false, errors: ["The Pick 5 data is missing its list of subjects."] };
   }
 
   const errors = [];
@@ -81,9 +99,10 @@ export function normalizeTopFive(input) {
     const source = isObject(rawSubject) ? rawSubject : {};
     const name = text(source.name, TOP_FIVE_LIMITS.subjectName);
     const intro = text(source.intro, TOP_FIVE_LIMITS.intro);
-    const problems = (Array.isArray(source.problems) ? source.problems : [])
+    const rows = (Array.isArray(source.problems) ? source.problems : [])
       .map(normalizeProblem)
-      .filter((p) => !problemIsBlank(p));
+      .filter((row) => !problemIsBlank(row));
+    const problems = rows.map((row) => row.problem);
 
     if (!name && !intro && problems.length === 0) return; // an empty, unnamed row
     const label = name || `Subject ${index + 1}`;
@@ -91,11 +110,17 @@ export function normalizeTopFive(input) {
     if (!name) errors.push(`${label} needs a name.`);
     if (problems.length > TOP_FIVE_LIMITS.problemsPerSubject) {
       errors.push(
-        `${label} has ${problems.length} problems. The Top Five holds up to ${TOP_FIVE_LIMITS.problemsPerSubject}.`,
+        `${label} has ${problems.length} problems. Pick 5 holds up to ${TOP_FIVE_LIMITS.problemsPerSubject}.`,
       );
     }
-    problems.forEach((p, i) => {
-      if (!p.problem) errors.push(`${label}, problem ${i + 1} needs the problem itself.`);
+    rows.forEach(({ problem: p, badVideo }, i) => {
+      if (badVideo) {
+        errors.push(
+          `${label}, problem ${i + 1}: that video link isn't a YouTube video. Paste a youtube.com or youtu.be link.`,
+        );
+      } else if (!p.problem && !p.video) {
+        errors.push(`${label}, problem ${i + 1} needs the problem itself or a YouTube link.`);
+      }
       if (p.steps.length > TOP_FIVE_LIMITS.stepsPerProblem) {
         errors.push(
           `${label}, problem ${i + 1} has ${p.steps.length} steps. The limit is ${TOP_FIVE_LIMITS.stepsPerProblem}.`,
@@ -119,7 +144,7 @@ export function normalizeTopFive(input) {
   return errors.length > 0 ? { ok: false, errors } : { ok: true, value: { subjects } };
 }
 
-// Reads the saved Top Five, or the Algebra 1 starter if nothing is saved yet.
+// Reads the saved Pick 5, or the Algebra 1 starter if nothing is saved yet.
 export async function loadTopFive(store) {
   const saved = await store.get(TOP_FIVE_KEY, { type: "json" });
   if (!isObject(saved)) return defaultTopFive();

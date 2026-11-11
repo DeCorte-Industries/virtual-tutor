@@ -134,6 +134,7 @@
 
   /* ---------- Color-block bands ---------- */
   .band{padding:96px 0;scroll-margin-top:72px;}
+  .anchor-alias{display:block;height:0;scroll-margin-top:72px;}
   .band-blue{background:var(--blue-deep);color:#fff;}
   .band-yellow{background:var(--yellow);color:var(--ink);}
   .band-paper{background:var(--paper);}
@@ -518,11 +519,14 @@
     </div>
   </section>
 
-  <!-- The Top Five (#13): worked problems by subject. Content: /api/top-five, edited at /admin/. -->
-  <section id="top-five" class="band band-paper2" aria-labelledby="topFiveHeading">
+  <!-- Pick 5 (#18; was "The Top Five", #13): worked problems and Henry's videos by subject.
+       Content: /api/top-five, edited at /admin/. The #top-five span keeps old links working:
+       it sits right at the section's top edge, so those links land where they always did. -->
+  <span id="top-five" class="anchor-alias" aria-hidden="true"></span>
+  <section id="pick-5" class="band band-paper2" aria-labelledby="topFiveHeading">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2 id="topFiveHeading">The Top Five.</h2>
+        <h2 id="topFiveHeading">Pick 5.</h2>
         <p>For the moment you think, "If I could just see one like this worked out." Five problems per subject, worked step by step the way Henry works them in a session.</p>
       </div>
       <div class="tf-tabs" id="topFiveTabs" role="tablist" aria-label="Subjects" hidden></div>

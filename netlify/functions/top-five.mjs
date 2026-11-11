@@ -1,7 +1,7 @@
 import { getStore } from "@netlify/blobs";
 import { loadTopFive } from "./lib/top-five.mjs";
 
-// Public, read-only. Returns Henry's Top Five worked problems by subject
+// Public, read-only. Returns Henry's Pick 5 worked problems and video IDs by subject
 // (edited at /admin/; see netlify/functions/lib/top-five.mjs).
 export default async () => {
   const topFive = await loadTopFive(getStore("site"));

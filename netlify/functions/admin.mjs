@@ -62,7 +62,7 @@ export default async (req) => {
     return json({ ok: true, content });
   }
 
-  // The Top Five (#13) has its own blob key and actions; see netlify/functions/lib/top-five.mjs.
+  // Pick 5 (#13, renamed in #18) has its own blob key and actions; see netlify/functions/lib/top-five.mjs.
   if (isTopFiveAction(body.action)) {
     const result = await handleTopFiveAction(store, body);
     return json(result.body, result.status);
