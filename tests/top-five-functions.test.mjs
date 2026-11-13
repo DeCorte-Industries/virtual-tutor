@@ -95,7 +95,7 @@ test("invalid Top Five saves return 400 with Henry-readable errors and change no
     topFive: { subjects: [{ name: "Algebra 1", problems: six }] },
   });
   assert.equal(res.status, 400);
-  assert.equal((await res.json()).error, "Algebra 1 has 6 problems. Pick 5 holds up to 5.");
+  assert.equal((await res.json()).error, "Algebra 1 has 6 problems. Pick 5! holds up to 5.");
   const pub = await (await topFive(new Request("http://localhost/api/top-five"))).json();
   assert.equal(pub.subjects[0].problems.length, 1);
 });

@@ -334,7 +334,7 @@
       })
       .catch((err) => {
         if (err.status === 401) return expired();
-        setMsg("err", `Could not load Pick 5: ${err.message}`);
+        setMsg("err", `Pick 5! didn't load: ${err.message}`);
       });
   }
   // Checks for a sign-in that already happened and listens for later ones (see top-five-session.js).
@@ -346,7 +346,7 @@
     "click",
     (e) => {
       if (!e.target.closest?.("#signOut") || !dirty || !password) return;
-      if (!window.confirm("Sign out and lose your unsaved Pick 5 changes?")) e.stopPropagation();
+      if (!window.confirm("Sign out and lose your unsaved Pick 5! changes?")) e.stopPropagation();
     },
     { capture: true },
   );
@@ -365,7 +365,7 @@
     try {
       const data = await api({ action: "topFiveSave", topFive: payload() });
       load(data.topFive);
-      setMsg("ok", "Saved. Pick 5 is live.");
+      setMsg("ok", "Saved. Pick 5! is live.");
     } catch (err) {
       if (err.status === 401) return expired();
       setMsg("err", `Not saved. ${err.message}`);

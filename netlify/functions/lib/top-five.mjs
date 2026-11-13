@@ -88,7 +88,7 @@ const problemIsBlank = ({ problem: p, badVideo }) =>
 // Returns { ok: true, value: { subjects } } or { ok: false, errors: [string] }.
 export function normalizeTopFive(input) {
   if (!isObject(input) || !Array.isArray(input.subjects)) {
-    return { ok: false, errors: ["The Pick 5 data is missing its list of subjects."] };
+    return { ok: false, errors: ["The Pick 5! data is missing its list of subjects."] };
   }
 
   const errors = [];
@@ -110,7 +110,7 @@ export function normalizeTopFive(input) {
     if (!name) errors.push(`${label} needs a name.`);
     if (problems.length > TOP_FIVE_LIMITS.problemsPerSubject) {
       errors.push(
-        `${label} has ${problems.length} problems. Pick 5 holds up to ${TOP_FIVE_LIMITS.problemsPerSubject}.`,
+        `${label} has ${problems.length} problems. Pick 5! holds up to ${TOP_FIVE_LIMITS.problemsPerSubject}.`,
       );
     }
     rows.forEach(({ problem: p, badVideo }, i) => {

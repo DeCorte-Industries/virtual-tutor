@@ -140,12 +140,12 @@ test("the admin save action stores the video ID and the load action returns it",
   assert.equal(JSON.parse(store.data.get("topFive")).subjects[0].problems[0].video, ID);
 });
 
-test("user-facing messages say Pick 5, not The Top Five", () => {
+test("user-facing messages say Pick 5!, not The Top Five", () => {
   const six = normalizeTopFive({
     subjects: [{ name: "Algebra 1", problems: [1, 2, 3, 4, 5, 6].map((n) => ({ problem: `p${n}` })) }],
   });
-  assert.deepEqual(six.errors, ["Algebra 1 has 6 problems. Pick 5 holds up to 5."]);
-  assert.deepEqual(normalizeTopFive(null).errors, ["The Pick 5 data is missing its list of subjects."]);
+  assert.deepEqual(six.errors, ["Algebra 1 has 6 problems. Pick 5! holds up to 5."]);
+  assert.deepEqual(normalizeTopFive(null).errors, ["The Pick 5! data is missing its list of subjects."]);
 });
 
 // ---------- Page markup ----------
@@ -153,9 +153,9 @@ test("user-facing messages say Pick 5, not The Top Five", () => {
 const home = read("public/index.html");
 const adminPage = read("public/admin/index.html");
 
-test("the section is headed Pick 5 and has the #pick-5 anchor", () => {
+test("the section is headed Pick 5! and has the #pick-5 anchor", () => {
   assert.match(home, /<section id="pick-5"[^>]*aria-labelledby="topFiveHeading"/);
-  assert.match(home, /<h2 id="topFiveHeading">Pick 5\.<\/h2>/);
+  assert.match(home, /<h2 id="topFiveHeading">Pick 5!<\/h2>/);
   assert.doesNotMatch(home, /The Top Five\./);
 });
 
@@ -174,14 +174,31 @@ test("old #top-five links still land on the section", () => {
   assert.match(js, /#top-five-\$\{s\.id\}/);
 });
 
-test("the admin says Pick 5 and links to #pick-5", () => {
-  assert.match(adminPage, /<h2>Pick 5<\/h2>/);
+test("the admin says Pick 5! and links to #pick-5", () => {
+  assert.match(adminPage, /<h2>Pick 5!<\/h2>/);
+  assert.match(adminPage, /<button type="button" id="tfSave">Save Pick 5!<\/button>/);
+  assert.match(adminPage, /shown in "Pick 5!" on the home page/);
   assert.match(adminPage, /href="\/#pick-5"/);
   assert.doesNotMatch(adminPage, /The Top Five|the Top Five/);
   assert.doesNotMatch(
     read("public/admin/top-five-admin.js"),
     /Top Five changes|the Top Five:|Top Five is live/,
   );
+});
+
+test("every user-facing Pick 5 has its exclamation point, with no doubled punctuation", () => {
+  const adminJs = read("public/admin/top-five-admin.js");
+  const lib = read("netlify/functions/lib/top-five.mjs");
+  // Strip comments so code notes and internal names don't count; only shown text does.
+  const shown = [home, adminPage]
+    .map((html) => html.replace(/<!--[\s\S]*?-->/g, ""))
+    .concat([adminJs, lib].map((js) => js.replace(/\/\/.*$/gm, "")))
+    .join("\n");
+  assert.doesNotMatch(shown, /Pick 5(?!!)/, "a user-facing Pick 5 without the !");
+  assert.doesNotMatch(shown, /Pick 5![.!?:,;]/, "doubled punctuation after Pick 5!");
+  assert.match(adminJs, /"Saved\. Pick 5! is live\."/);
+  assert.match(adminJs, /"Sign out and lose your unsaved Pick 5! changes\?"/);
+  assert.match(adminJs, /`Pick 5! didn't load: \$\{err\.message\}`/);
 });
 
 test("Pick 5 videos add no script request to the home page", () => {
