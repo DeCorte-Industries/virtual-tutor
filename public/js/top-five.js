@@ -1,8 +1,78 @@
-// "The Top Five" (issue #13): worked problems by subject on the home page.
-// Content comes from /api/top-five and is edited by Henry at /admin/.
-// All of Henry's text is inserted with textContent, never as HTML.
+// "Pick 5" (issue #18; was "The Top Five", #13): worked problems by subject on
+// the home page, each with Henry's YouTube video or a "coming soon" placeholder
+// (see pick5Video below). Content comes from /api/top-five and is
+// edited by Henry at /admin/. All of Henry's text is inserted with textContent,
+// never as HTML.
+
+// ---------- Pick 5 video slot (issue #18) ----------
+// The video slot shown with each worked problem.
+// A saved video becomes a click-to-load facade: a lazy-loaded thumbnail and a
+// play button. The YouTube player (youtube-nocookie.com) only loads when the
+// visitor clicks, so the home page never pays for an iframe up front. With no
+// video yet, the slot is a "coming soon" placeholder of the same 16:9 size.
+// Only 11-character YouTube IDs are used, and every URL is built here.
+// Kept in this file (not its own script) so the home page makes no extra request;
+// tests run it on its own through globalThis.pick5Video.
+globalThis.pick5Video = (() => {
+  const YOUTUBE_ID = /^[A-Za-z0-9_-]{11}$/;
+  const isId = (value) => typeof value === "string" && YOUTUBE_ID.test(value);
+
+  function el(doc, tag, className, text) {
+    const node = doc.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+
+  function player(doc, id, title) {
+    const iframe = el(doc, "iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+    iframe.title = title;
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    return iframe;
+  }
+
+  function slot(doc, id, title, soonText) {
+    const label = title || "Henry's worked problem";
+    if (!isId(id)) {
+      const box = el(doc, "div", "tf-video tf-video-soon");
+      box.append(
+        el(doc, "p", "tf-video-soon-text", soonText || "Henry's video for this one is coming soon."),
+      );
+      return box;
+    }
+
+    const box = el(doc, "div", "tf-video");
+    const thumb = el(doc, "img");
+    thumb.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    thumb.alt = "";
+    thumb.loading = "lazy";
+    thumb.decoding = "async";
+    thumb.width = 480;
+    thumb.height = 360;
+
+    const play = el(doc, "button", "tf-video-play");
+    play.type = "button";
+    play.setAttribute("aria-label", `Play video: ${label}`);
+    play.append(el(doc, "span", "tf-video-play-icon"));
+    play.addEventListener("click", () => {
+      const frame = player(doc, id, label);
+      box.replaceChildren(frame);
+      frame.focus?.(); // keep keyboard focus on the video, not lost with the removed button
+    });
+
+    box.append(thumb, play);
+    return box;
+  }
+
+  return { isId, slot };
+})();
+
 (() => {
-  const section = document.getElementById("top-five");
+  const section = document.getElementById("pick-5");
   if (!section) return;
 
   const tabList = document.getElementById("topFiveTabs");
@@ -83,15 +153,20 @@
 
   function renderProblem(problem, index) {
     const card = make("li", "tf-problem");
+    const title = problem.title || `Problem ${index + 1}`;
+    card.append(globalThis.pick5Video.slot(document, problem.video, title));
+    const body = make("div", "tf-body");
+    card.append(body);
     const head = make("p", "tf-label");
     head.append(make("span", "tf-num", String(index + 1)));
-    head.append(make("span", "tf-title", problem.title || `Problem ${index + 1}`));
-    card.append(head);
-    card.append(make("p", "tf-statement", problem.problem));
+    head.append(make("span", "tf-title", title));
+    body.append(head);
+    if (problem.problem) body.append(make("p", "tf-statement", problem.problem));
 
     const steps = Array.isArray(problem.steps) ? problem.steps : [];
     if (steps.length === 0 && !problem.answer) {
-      card.append(make("p", "tf-soon", "Henry's worked solution is coming soon."));
+      // A video on its own is the whole solution; only typed problems promise more.
+      if (!problem.video) body.append(make("p", "tf-soon", "Henry's worked solution is coming soon."));
       return card;
     }
 
@@ -108,7 +183,7 @@
       answer.append(document.createTextNode(problem.answer));
       details.append(answer);
     }
-    card.append(details);
+    body.append(details);
     return card;
   }
 
@@ -126,6 +201,11 @@
           `Henry is working out the first ${subject.name} problems now. Check back soon, or book a lesson hour and work through yours live.`,
         ),
       );
+      const soon = make("div", "tf-empty-videos");
+      soon.append(
+        globalThis.pick5Video.slot(document, "", "", `Henry's ${subject.name} videos are coming soon.`),
+      );
+      panel.append(soon);
     } else {
       const list = make("ol", "tf-problems");
       problems.forEach((p, i) => {
@@ -163,7 +243,7 @@
     subjects.forEach((subject, i) => {
       const tab = make("button", "tf-tab", subject.name);
       tab.type = "button";
-      tab.id = `top-five-tab-${subject.id || i}`;
+      tab.id = `pick-5-tab-${subject.id || i}`;
       tab.setAttribute("role", "tab");
       tab.setAttribute("aria-controls", "topFivePanel");
       tab.addEventListener("click", () => selectTab(subjects, i, false));
@@ -178,9 +258,11 @@
       selectTab(subjects, next, true);
     });
 
-    // A link like mathwithhenry.com/#top-five-algebra-1 opens that subject.
+    // A link like mathwithhenry.com/#pick-5-algebra-1 opens that subject. The
+    // old #top-five-algebra-1 form still works.
     const openFromHash = () => {
-      const index = subjects.findIndex((s) => `#top-five-${s.id}` === window.location.hash);
+      const hash = window.location.hash;
+      const index = subjects.findIndex((s) => hash === `#pick-5-${s.id}` || hash === `#top-five-${s.id}`);
       if (index >= 0) {
         selectTab(subjects, index, false);
         section.scrollIntoView();

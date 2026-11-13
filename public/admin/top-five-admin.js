@@ -1,4 +1,4 @@
-// "The Top Five" editor (issue #13). Loaded by /admin/ next to the verse and
+// "Pick 5" editor (issue #13, renamed and given video links in #18). Loaded by /admin/ next to the verse and
 // notes editor. It waits for that page's sign-in, then loads and saves through
 // /api/admin with the actions "topFiveLoad" and "topFiveSave". The server
 // (netlify/functions/lib/top-five.mjs) validates everything again.
@@ -62,7 +62,10 @@
     setMsg("", "You have unsaved changes.");
   }
 
-  const blankProblem = () => ({ title: "", problem: "", steps: [], answer: "" });
+  const blankProblem = () => ({ title: "", problem: "", steps: [], answer: "", video: "" });
+
+  // Saved videos come back as just the YouTube ID; show Henry a normal link.
+  const videoLink = (id) => (id ? `https://www.youtube.com/watch?v=${id}` : "");
 
   function make(tag, attrs, text) {
     const el = document.createElement(tag);
@@ -116,8 +119,21 @@
     );
     box.append(
       field(
+        `${id}-video`,
+        "YouTube link (optional)",
+        problem.video,
+        300,
+        (v) => {
+          problem.video = v;
+        },
+        0,
+        "Paste the youtube.com or youtu.be link to your video of this problem. Leave it blank until the video is up.",
+      ),
+    );
+    box.append(
+      field(
         `${id}-problem`,
-        "The problem",
+        "The problem (optional if there's a video)",
         problem.problem,
         2000,
         (v) => {
@@ -166,7 +182,7 @@
         p === subject.problems.length - 1,
       ),
       smallButton("Remove problem", () => {
-        const hasText = problem.problem || problem.steps.join("").trim();
+        const hasText = problem.problem || problem.steps.join("").trim() || problem.video.trim();
         if (hasText && !window.confirm(`Remove problem ${p + 1}? This can't be undone after you save.`))
           return;
         subject.problems.splice(p, 1);
@@ -274,6 +290,7 @@
         problem: p.problem || "",
         steps: Array.isArray(p.steps) ? p.steps.slice() : [],
         answer: p.answer || "",
+        video: videoLink(p.video),
       })),
     }));
     dirty = false;
@@ -290,6 +307,7 @@
           problem: p.problem,
           steps: p.steps,
           answer: p.answer,
+          video: p.video,
         })),
       })),
     };
@@ -316,19 +334,19 @@
       })
       .catch((err) => {
         if (err.status === 401) return expired();
-        setMsg("err", `Could not load the Top Five: ${err.message}`);
+        setMsg("err", `Pick 5! didn't load: ${err.message}`);
       });
   }
   // Checks for a sign-in that already happened and listens for later ones (see top-five-session.js).
   window.tfConnectSession(window, document, signedIn, signedOut);
 
-  // Signing out drops unsaved Top Five edits, so ask first. Listening on document in the capture phase
+  // Signing out drops unsaved Pick 5 edits, so ask first. Listening on document in the capture phase
   // runs this before the page's own sign-out handler on the button, so cancelling stops it.
   document.addEventListener(
     "click",
     (e) => {
       if (!e.target.closest?.("#signOut") || !dirty || !password) return;
-      if (!window.confirm("Sign out and lose your unsaved Top Five changes?")) e.stopPropagation();
+      if (!window.confirm("Sign out and lose your unsaved Pick 5! changes?")) e.stopPropagation();
     },
     { capture: true },
   );
@@ -347,7 +365,7 @@
     try {
       const data = await api({ action: "topFiveSave", topFive: payload() });
       load(data.topFive);
-      setMsg("ok", "Saved. The Top Five is live.");
+      setMsg("ok", "Saved. Pick 5! is live.");
     } catch (err) {
       if (err.status === 401) return expired();
       setMsg("err", `Not saved. ${err.message}`);
@@ -356,7 +374,7 @@
     }
   });
 
-  // Symbol buttons type into whichever Top Five box was used last.
+  // Symbol buttons type into whichever Pick 5 box was used last.
   const bar = document.getElementById("tfSymbols");
   for (const symbol of SYMBOLS) {
     const btn = make(

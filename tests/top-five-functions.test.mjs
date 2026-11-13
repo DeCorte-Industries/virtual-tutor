@@ -95,7 +95,7 @@ test("invalid Top Five saves return 400 with Henry-readable errors and change no
     topFive: { subjects: [{ name: "Algebra 1", problems: six }] },
   });
   assert.equal(res.status, 400);
-  assert.equal((await res.json()).error, "Algebra 1 has 6 problems. The Top Five holds up to 5.");
+  assert.equal((await res.json()).error, "Algebra 1 has 6 problems. Pick 5! holds up to 5.");
   const pub = await (await topFive(new Request("http://localhost/api/top-five"))).json();
   assert.equal(pub.subjects[0].problems.length, 1);
 });
@@ -121,4 +121,46 @@ test("saving the verse and notes does not touch the Top Five, and vice versa", a
 test("unknown admin actions are still rejected", async () => {
   const res = await post({ password: PASSWORD, action: "topFiveDelete" });
   assert.equal(res.status, 400);
+});
+
+test("Pick 5 video links saved in /admin/ reach /api/top-five as video IDs only (#18)", async () => {
+  const withVideo = {
+    subjects: [
+      {
+        name: "Algebra 1",
+        problems: [
+          {
+            title: "Typed and filmed",
+            problem: "2x + 3 = 11",
+            video: "https://youtu.be/dQw4w9WgXcQ?si=share",
+          },
+          { title: "Filmed only", video: "https://www.youtube.com/watch?v=aqz-KE-bpKQ" },
+          { title: "Typed only", problem: "3x = 9" },
+        ],
+      },
+    ],
+  };
+  const saved = await post({ password: PASSWORD, action: "topFiveSave", topFive: withVideo });
+  assert.equal(saved.status, 200);
+
+  const pub = await (await topFive(new Request("http://localhost/api/top-five"))).json();
+  assert.deepEqual(
+    pub.subjects[0].problems.map((p) => [p.title, p.video]),
+    [
+      ["Typed and filmed", "dQw4w9WgXcQ"],
+      ["Filmed only", "aqz-KE-bpKQ"],
+      ["Typed only", ""],
+    ],
+  );
+
+  const bad = await post({
+    password: PASSWORD,
+    action: "topFiveSave",
+    topFive: {
+      subjects: [{ name: "Algebra 1", problems: [{ problem: "x", video: "https://example.com/v" }] }],
+    },
+  });
+  assert.equal(bad.status, 400);
+  const after = await (await topFive(new Request("http://localhost/api/top-five"))).json();
+  assert.equal(after.subjects[0].problems.length, 3);
 });

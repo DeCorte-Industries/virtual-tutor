@@ -87,6 +87,7 @@ test("normalize trims text, splits steps, drops blank rows, and assigns ids", ()
             problem: "2x + 3 = 11",
             steps: ["Subtract 3.", "Divide by 2."],
             answer: "x = 4",
+            video: "",
           },
         ],
       },
@@ -134,7 +135,7 @@ test("normalize allows exactly five problems and rejects a sixth", () => {
     subjects: [{ name: "Algebra 1", problems: [1, 2, 3, 4, 5, 6].map(problem) }],
   });
   assert.equal(six.ok, false);
-  assert.deepEqual(six.errors, ["Algebra 1 has 6 problems. The Top Five holds up to 5."]);
+  assert.deepEqual(six.errors, ["Algebra 1 has 6 problems. Pick 5! holds up to 5."]);
 });
 
 test("normalize rejects missing names, missing problem text, too many steps, and duplicate subjects", () => {
@@ -152,7 +153,7 @@ test("normalize rejects missing names, missing problem text, too many steps, and
   assert.equal(result.ok, false);
   assert.deepEqual(result.errors, [
     "Subject 1 needs a name.",
-    "Algebra 1, problem 1 needs the problem itself.",
+    "Algebra 1, problem 1 needs the problem itself or a YouTube link.",
     "Geometry, problem 1 has 26 steps. The limit is 25.",
     'There are two subjects named "Algebra 1". Give each subject its own name.',
   ]);
@@ -162,7 +163,7 @@ test("normalize rejects bad shapes and too many subjects", () => {
   for (const bad of [null, "text", [], {}, { subjects: "Algebra 1" }]) {
     assert.deepEqual(normalizeTopFive(bad), {
       ok: false,
-      errors: ["The Top Five data is missing its list of subjects."],
+      errors: ["The Pick 5! data is missing its list of subjects."],
     });
   }
   const many = { subjects: Array.from({ length: 13 }, (_, i) => ({ name: `Subject ${i}` })) };
